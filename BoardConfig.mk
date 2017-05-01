@@ -40,7 +40,7 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
 TARGET_KERNEL_SOURCE := kernel/ulefone/k11ta_a
-TARGET_KERNEL_CONFIG := cyanogenmod_k11ta_a_defconfig
+TARGET_KERNEL_CONFIG := lineageos_k11ta_a_defconfig
 
 TARGET_BOOTLOADER_BOARD_NAME := k11ta_a
 

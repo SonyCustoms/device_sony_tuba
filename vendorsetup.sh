@@ -1,3 +1,3 @@
-add_lunch_combo cm_k11ta_a-user
-add_lunch_combo cm_k11ta_a-userdebug
-add_lunch_combo cm_k11ta_a-eng
+add_lunch_combo lineage_k11ta_a-user
+add_lunch_combo lineage_k11ta_a-userdebug
+add_lunch_combo lineage_k11ta_a-eng

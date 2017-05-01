@@ -17,7 +17,7 @@ $(call inherit-product, device/ulefone/k11ta_a/full_k11ta_a.mk)
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 
-PRODUCT_NAME := cm_k11ta_a
+PRODUCT_NAME := lineage_k11ta_a
 BOARD_VENDOR := ulefone
 PRODUCT_DEVICE := k11ta_a
 
