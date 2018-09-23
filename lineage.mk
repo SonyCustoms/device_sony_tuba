@@ -12,21 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, device/ulefone/k11ta_a/full_k11ta_a.mk)
+$(call inherit-product, device/sony/tuba/full_tuba.mk)
 
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 
-PRODUCT_NAME := lineage_k11ta_a
-BOARD_VENDOR := ulefone
-PRODUCT_DEVICE := k11ta_a
+PRODUCT_NAME := lineage_tuba
+BOARD_VENDOR := sony
+PRODUCT_DEVICE := tuba
 
-PRODUCT_GMS_CLIENTID_BASE := android-ulefone
+PRODUCT_GMS_CLIENTID_BASE := android-sony
 
-PRODUCT_MANUFACTURER := Ulefone
-PRODUCT_MODEL := Ulefone Future
+PRODUCT_MANUFACTURER := Sony
+PRODUCT_MODEL := Sony XA
 
-PRODUCT_BRAND := Ulefone
-TARGET_VENDOR := ulefone
-TARGET_VENDOR_PRODUCT_NAME := Future
-TARGET_VENDOR_DEVICE_NAME := k11ta_a
+PRODUCT_BRAND := Sony
+TARGET_VENDOR := sony
+TARGET_VENDOR_PRODUCT_NAME := XA
+TARGET_VENDOR_DEVICE_NAME := tuba

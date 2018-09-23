@@ -2,7 +2,7 @@
 ro.telephony.default_network=9
 
 # Graphics
-ro.sf.lcd_density=480
+ro.sf.lcd_density=320
 
 # Tethering
 wifi.tethering.interface=wlan0

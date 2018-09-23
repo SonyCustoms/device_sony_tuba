@@ -1,7 +1,8 @@
 #!/bin/bash
 
-export DEVICE=k11ta_a
-export VENDOR=ulefone
+export DEVICE=tuba
+export VENDOR=sony
+
 
 if [ $# -eq 0 ]; then
   SRC=adb
@@ -55,6 +56,3 @@ BASE=../../../vendor/$VENDOR/$DEVICE/proprietary
 rm -rf $BASE/*
 
 extract ../../$VENDOR/$DEVICE/proprietary-files-mtk.txt $BASE
-extract ../../$VENDOR/$DEVICE/proprietary-files.txt $BASE
-
-./setup-makefiles.sh

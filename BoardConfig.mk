@@ -15,10 +15,8 @@
 
 TARGET_BOARD_PLATFORM := mt6755
 
-DEVICE_PATH := device/ulefone/k11ta_a
+DEVICE_PATH := device/sony/tuba
 
-MTK_PROJECT_CONFIG ?= $(DEVICE_PATH)/ProjectConfig.mk
-include $(MTK_PROJECT_CONFIG)
 include device/cyanogen/mt6755-common/BoardConfigCommon.mk
 
 MTK_INTERNAL_CDEFS := $(foreach t,$(AUTO_ADD_GLOBAL_DEFINE_BY_NAME),$(if $(filter-out no NO none NONE false FALSE,$($(t))),-D$(t)))
@@ -32,17 +30,17 @@ BOARD_GLOBAL_CPPFLAGS += $(MTK_INTERNAL_CDEFS)
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 enforcing=0 androidboot.selinux=permissive
-BOARD_MKBOOTIMG_ARGS := --board K11TA-A.A.vR14. --ramdisk_offset 0x04f88000 --second_offset 0x00e88000 --tags_offset 0x03f88000
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 enforcing=0 androidboot.selinux=permissive loglevel=8
+BOARD_MKBOOTIMG_ARGS := --board 1465391499 --ramdisk_offset 0x04f88000 --second_offset 0x00e88000 --tags_offset 0x03f88000
 
 # Kernel properties
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
-TARGET_KERNEL_SOURCE := kernel/ulefone/k11ta_a
-TARGET_KERNEL_CONFIG := lineageos_k11ta_a_defconfig
+TARGET_KERNEL_SOURCE := kernel/sony/tuba
+TARGET_KERNEL_CONFIG := tuba_defconfig
 
-TARGET_BOOTLOADER_BOARD_NAME := k11ta_a
+TARGET_BOOTLOADER_BOARD_NAME := tuba
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
@@ -60,7 +58,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # TWRP
-DEVICE_RESOLUTION := 1080x1920
-DEVICE_SCREEN_WIDTH := 1080
-DEVICE_SCREEN_HEIGHT := 1920
+DEVICE_RESOLUTION := 720x1280
+DEVICE_SCREEN_WIDTH := 720
+DEVICE_SCREEN_HEIGHT := 1280
 TW_THEME := portrait_hdpi

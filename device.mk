@@ -13,11 +13,8 @@
 # limitations under the License.
 #
 
-VENDOR_BLOBS ?= vendor/ulefone/k11ta_a/k11ta_a-vendor.mk
+VENDOR_BLOBS ?= vendor/sony/tuba/tuba-vendor.mk
 $(call inherit-product-if-exists, $(VENDOR_BLOBS))
-
-MTK_PROJECT_CONFIG ?= device/ulefone/k11ta_a/ProjectConfig.mk
-include $(MTK_PROJECT_CONFIG)
 
 # Charger and USB
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
@@ -53,8 +50,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/ht120.mtc:system/etc/.tp/.htc120.mtc
 
 # System Properties
-#PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-#    persist.sys.usb.config=mtp
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    persist.sys.usb.config=mtp,adb
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
@@ -62,16 +59,8 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 PRODUCT_AAPT_PREBUILT_DPI := xxhdpi xhdpi hdpi
 
 # Boot animation
-TARGET_SCREEN_HEIGHT := 960
-TARGET_SCREEN_WIDTH := 540
-
-# Fingerprint
-PRODUCT_PACKAGES += \
-    fingerprintd
-
-# GPS
-PRODUCT_PACKAGES += \
-    YGPS
+TARGET_SCREEN_HEIGHT := 1280
+TARGET_SCREEN_WIDTH := 720
 
 # Telephony
 SIM_COUNT := 2
@@ -90,10 +79,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     sys.io.scheduler=bfq
 
 # Dalvik heap configurations
-$(call inherit-product-if-exists, frameworks/native/build/phone-xxxhdpi-4096-dalvik-heap.mk)
+$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
 
 # Call hwui memory config
-$(call inherit-product-if-exists, frameworks/native/build/phone-xxxhdpi-4096-hwui-memory.mk)
+$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 # Versioning
 PRODUCT_PROPERTY_OVERRIDES += \
