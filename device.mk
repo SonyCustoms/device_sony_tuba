@@ -84,38 +84,6 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalv
 # Call hwui memory config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
-# These additionals go to /default.prop
-ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0 \
-ro.allow.mock.location=1 \
-ro.debuggable=1 \
-ro.adb.secure=0 \
-persist.service.acm.enable=0 \
-persist.sys.usb.config=mtp \
-ro.mount.fs=EXT4 \
-persist.radio.multisim.config=dsds \
-ro.mtk_lte_support=1 \
-ro.telephony.ril.config=fakeiccid \
-ro.telephony.sim.count=2 \
-persist.gemini.sim_num=2 \
-ril.current.share_modem=2 \
-ro.mtk_gps_support=1 \
-ro.mtk_agps_app=1
-
-# build.prop
-PRODUCT_PROPERTY_OVERRIDES += \
-    media.stagefright.legacyencoder=true \
-    media.stagefright.less-secure=true \
-    persist.service.adb.enable=1 \
-    persist.service.debuggable=1 \
-    persist.sys.root_access=0 \
-    ro.sys.fw.bg_apps_limits=5
-
-    
-# Log control prop
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.ril.log=0 \
-    ro.disable.xlog=0
-
 # Versioning
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.mediatek.version.release=$(MTK_BUILD_VERNO) \
