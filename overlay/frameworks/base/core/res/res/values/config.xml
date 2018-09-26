@@ -199,10 +199,6 @@
         <item>255</item>
     </integer-array>
 
-    <bool name="config_ledCanPulse">true</bool>
-    <bool name="config_multiColorNotificationLed">true</bool>
-    <bool name="config_multiColorBatteryLed">true</bool>
-
     <!-- MMS user agent string -->
     <string name="config_mms_user_agent" translatable="false">Android-Mms/0.1</string>
 
