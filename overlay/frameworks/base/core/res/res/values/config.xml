@@ -150,23 +150,18 @@
 
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>128</item>
-        <item>256</item>
-        <item>384</item>
-        <item>512</item>
-        <item>640</item>
-        <item>768</item>
-        <item>896</item>
-        <item>1024</item>
-        <item>2048</item>
-        <item>4096</item>
-        <item>6144</item>
-        <item>8192</item>
-        <item>10240</item>
-        <item>12288</item>
-        <item>14336</item>
-        <item>16384</item>
-        <item>18432</item>
+        <item>1</item>
+        <item>25</item>
+        <item>27</item>
+        <item>28</item>
+        <item>310</item>
+        <item>317</item>
+        <item>350</item>
+        <item>397</item>
+        <item>1000</item>
+        <item>2200</item>
+        <item>2400</item>
+        <item>2500</item>
     </integer-array>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
@@ -175,25 +170,38 @@
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>8</item>
-        <item>64</item>
-        <item>98</item>
-        <item>104</item>
-        <item>110</item>
-        <item>116</item>
+        <item>3</item>
+        <item>3</item>
+        <item>14</item>
+        <item>17</item>
+        <item>28</item>
+        <item>28</item>
+        <item>29</item>
+        <item>29</item>
+        <item>60</item>
+        <item>60</item>
+        <item>108</item>
+        <item>108</item>
+        <item>111</item>
+        <item>114</item>
+        <item>114</item>
+        <item>117</item>
         <item>122</item>
-        <item>128</item>
-        <item>134</item>
-        <item>182</item>
-        <item>255</item>
-        <item>255</item>
-        <item>255</item>
-        <item>255</item>
-        <item>255</item>
-        <item>255</item>
+        <item>122</item>
+        <item>155</item>
+        <item>165</item>
+        <item>180</item>
+        <item>185</item>
+        <item>195</item>
+        <item>200</item>
+        <item>213</item>
         <item>255</item>
         <item>255</item>
     </integer-array>
+
+    <bool name="config_ledCanPulse">true</bool>
+    <bool name="config_multiColorNotificationLed">true</bool>
+    <bool name="config_multiColorBatteryLed">true</bool>
 
     <!-- MMS user agent string -->
     <string name="config_mms_user_agent" translatable="false">Android-Mms/0.1</string>
