@@ -17,8 +17,8 @@ VENDOR_BLOBS ?= vendor/sony/tuba/tuba-vendor.mk
 $(call inherit-product-if-exists, $(VENDOR_BLOBS))
 
 # Charger and USB
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.usb.vid=2970
+#PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+#    ro.usb.vid=2970
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
