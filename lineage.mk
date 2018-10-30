@@ -1,4 +1,4 @@
-# Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2016 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,5 +28,5 @@ PRODUCT_MODEL := Sony XA
 
 PRODUCT_BRAND := Sony
 TARGET_VENDOR := sony
-TARGET_VENDOR_PRODUCT_NAME := XA
+TARGET_VENDOR_PRODUCT_NAME := Mars
 TARGET_VENDOR_DEVICE_NAME := tuba

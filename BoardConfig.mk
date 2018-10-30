@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2016 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ TARGET_BOARD_PLATFORM := mt6755
 
 DEVICE_PATH := device/sony/tuba
 
+MTK_PROJECT_CONFIG ?= $(DEVICE_PATH)/ProjectConfig.mk
+include $(MTK_PROJECT_CONFIG)
 include device/cyanogen/mt6755-common/BoardConfigCommon.mk
 
 MTK_INTERNAL_CDEFS := $(foreach t,$(AUTO_ADD_GLOBAL_DEFINE_BY_NAME),$(if $(filter-out no NO none NONE false FALSE,$($(t))),-D$(t)))
@@ -25,26 +27,21 @@ MTK_INTERNAL_CDEFS += $(foreach t,$(AUTO_ADD_GLOBAL_DEFINE_BY_NAME_VALUE),$(if $
 
 BOARD_GLOBAL_CFLAGS += $(MTK_INTERNAL_CDEFS)
 BOARD_GLOBAL_CPPFLAGS += $(MTK_INTERNAL_CDEFS)
-BOARD_GLOBAL_CFLAGS += -DCOMPAT_SENSORS_M
 
 # Kernel informations
-BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 enforcing=0 androidboot.selinux=permissive loglevel=8
 BOARD_MKBOOTIMG_ARGS := --board 1465391499 --ramdisk_offset 0x04f88000 --second_offset 0x00e88000 --tags_offset 0x03f88000
 
-# LightHAL
-TARGET_PROVIDES_LIBLIGHT := true
-
 # Kernel properties
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
-
-TARGET_KERNEL_SOURCE := kernel/sony/tuba
-TARGET_KERNEL_CONFIG := tuba_defconfig
+TARGET_PREBUILT_KERNEL := device/sony/tuba/prebuilts/kernel
 
 TARGET_BOOTLOADER_BOARD_NAME := tuba
+
+# Bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
+
 WITH_SU := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
@@ -55,7 +52,6 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2793406464
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 27468479488
 BOARD_FLASH_BLOCK_SIZE := 131072
-TARGET_KMODULES := true
 
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
