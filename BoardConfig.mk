@@ -29,13 +29,22 @@ BOARD_GLOBAL_CFLAGS += $(MTK_INTERNAL_CDEFS)
 BOARD_GLOBAL_CPPFLAGS += $(MTK_INTERNAL_CDEFS)
 
 # Kernel informations
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 enforcing=0 androidboot.selinux=permissive loglevel=8
 BOARD_MKBOOTIMG_ARGS := --board 1465391499 --ramdisk_offset 0x04f88000 --second_offset 0x00e88000 --tags_offset 0x03f88000
 
+# LightHAL
+TARGET_PROVIDES_LIBLIGHT := true
+
 # Kernel properties
-TARGET_PREBUILT_KERNEL := device/sony/tuba/prebuilts/kernel
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+
+TARGET_KERNEL_SOURCE := kernel/sony/tuba
+TARGET_KERNEL_CONFIG := tuba_defconfig
+
 
 TARGET_BOOTLOADER_BOARD_NAME := tuba
 
