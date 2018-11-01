@@ -19,9 +19,18 @@ $(call inherit-product-if-exists, $(VENDOR_BLOBS))
 MTK_PROJECT_CONFIG ?= device/sony/tuba/ProjectConfig.mk
 include $(MTK_PROJECT_CONFIG)
 
-# Charger and USB
+# Charger and USB + adb
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.usb.vid=2970
+    ro.usb.vid=2970 \
+	ro.mount.fs=EXT4 \
+	ro.adb.secure=0 \
+	ro.secure=0 \
+	ro.allow.mock.location=0 \
+	ro.debuggable=1 \
+	persist.service.acm.enable=0 \
+	camera.disable_zsl_mode=1 \
+	persist.radio.lte.chip=0 \
+    persist.sys.usb.config=mtp,adb
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
