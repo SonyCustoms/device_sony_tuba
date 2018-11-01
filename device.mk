@@ -76,23 +76,11 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.manual_sensor.xml:system/etc/permissions/android.hardware.camera.manual_sensor.xml \
     frameworks/native/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml
 
-# Media
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
-    $(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml
-
 #NFC
 PRODUCT_PACKAGES += \
     com.android.nfc_extras \
     NfcNci \
     Tag
-#NFC
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
-    $(LOCAL_PATH)/configs/nfc/nfc.cfg:system/etc/nfc.cfg \
-    $(LOCAL_PATH)/configs/nfc/nfcse.cfg:system/etc/nfcse.cfg \
-    $(LOCAL_PATH)/configs/nfc/libnfc-nxp_RF.conf:system/vendor/libnfc-nxp_RF.conf \
-    $(LOCAL_PATH)/configs/nfc/nfcee_access.xml:system/etc/nfcee_access.xml
 
 # exFAT
 PRODUCT_PACKAGES += \
@@ -129,9 +117,6 @@ SIM_COUNT := 2
 PRODUCT_PROPERTY_OVERRIDES += ro.telephony.sim.count=$(SIM_COUNT)
 PRODUCT_PROPERTY_OVERRIDES += persist.radio.default.sim=0
 PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/ecc_list.xml:system/etc/ecc_list.xml
 
 # Graphics
 MTK_GPU_VERSION := mali midgard r7p0
