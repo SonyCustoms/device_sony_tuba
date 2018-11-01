@@ -94,12 +94,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nfc/libnfc-nxp_RF.conf:system/vendor/libnfc-nxp_RF.conf \
     $(LOCAL_PATH)/configs/nfc/nfcee_access.xml:system/etc/nfcee_access.xml
 
-# Thermal
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermal.conf:system/etc/.tp/thermal.conf \
-    $(LOCAL_PATH)/configs/thermal.off.conf:system/etc/.tp/thermal.off.conf \
-    $(LOCAL_PATH)/configs/ht120.mtc:system/etc/.tp/.htc120.mtc
-
 # exFAT
 PRODUCT_PACKAGES += \
     mount.exfat \
@@ -110,10 +104,6 @@ PRODUCT_PACKAGES += \
     fsck.ntfs \
     mkfs.ntfs \
     mount.ntfs
-
-# System Properties
-#PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-#    persist.sys.usb.config=mtp
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
