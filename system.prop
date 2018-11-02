@@ -6,3 +6,18 @@ ro.sf.lcd_density=320
 
 # Tethering
 wifi.tethering.interface=wlan0
+
+#nfc
+#S : JackBB 20161013 - Update system.prop file for customer NFC feature requirement
+ro.nfc.se.sim.enable=true
+ro.nfc.se.smx.enable=false
+ro.nfc.icon.enable=false
+ro.nfc.on.default=true
+#E : ackBB 20161013 - Update system.prop file for customer NFC feature requirement
+
+#S : JackBB 20161026 - Update system.prop file for NFC FW Version
+persist.nfc.cap.fwver=80126
+persist.nfc.cap.hwver=0001
+#E : JackBB 20161026 - Update system.prop file for NFC FW Version
+ro.nfc.port=I2C
+mtknfc.status.type=unknow
