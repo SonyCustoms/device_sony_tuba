@@ -30,3 +30,8 @@ PRODUCT_BRAND := Sony
 TARGET_VENDOR := sony
 TARGET_VENDOR_PRODUCT_NAME := XA
 TARGET_VENDOR_DEVICE_NAME := tuba
+
+# Set build fingerprint / ID / Product Name ect.
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRIVATE_BUILD_DESC="full_tuba-user 7.0 NRD90M 1505421649 test-keys" \
+    BUILD_FINGERPRINT="Sony/full_tuba/tuba:7.0/NRD90M/1505421649:user/test-keys"
