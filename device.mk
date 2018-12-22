@@ -29,7 +29,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	ro.debuggable=1 \
 	persist.service.acm.enable=0 \
 	camera.disable_zsl_mode=1 \
-	persist.radio.lte.chip=0 \
     persist.sys.usb.config=mtp,adb
 
 # Overlay
@@ -112,23 +111,12 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui
 PRODUCT_PACKAGES += \
     YGPS
 
-# Telephony
-SIM_COUNT := 2
-PRODUCT_PROPERTY_OVERRIDES += ro.telephony.sim.count=$(SIM_COUNT)
-PRODUCT_PROPERTY_OVERRIDES += persist.radio.default.sim=0
-PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
-
 # Graphics
 MTK_GPU_VERSION := mali midgard r7p0
 
 # IO Scheduler
 PRODUCT_PROPERTY_OVERRIDES += \
     sys.io.scheduler=bfq
-
-# Versioning
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.mediatek.version.release=$(MTK_BUILD_VERNO) \
-    ro.mediatek.chip_ver=$(MTK_CHIP_VER)
 
 # Inherit the rest from mt6755-common
 $(call inherit-product, device/cyanogen/mt6755-common/mt6755.mk)
