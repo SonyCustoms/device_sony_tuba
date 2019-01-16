@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, device/sony/tuba/full_tuba.mk)
-
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
-
+$(call inherit-product, device/sony/tuba/device.mk)
 
 PRODUCT_NAME := lineage_tuba
 BOARD_VENDOR := sony

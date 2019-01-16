@@ -118,5 +118,107 @@ MTK_GPU_VERSION := mali midgard r7p0
 PRODUCT_PROPERTY_OVERRIDES += \
     sys.io.scheduler=bfq
 
-# Inherit the rest from mt6755-common
-$(call inherit-product, device/cyanogen/mt6755-common/mt6755.mk)
+
+# Root
+PRODUCT_PACKAGES += \
+    fstab.mt6755 \
+    init.connectivity.rc \
+    init.modem.rc \
+    init.mt6755.rc \
+    init.mt6755.usb.rc \
+    init.project.rc \
+    init.recovery.mt6755.rc \
+    init.rilproxy.rc \
+    init.usb.configfs.rc \
+    init.usb.rc \
+    ueventd.mt6755.rc \
+    factory_init.connectivity.rc \
+    factory_init.project.rc \
+    factory_init.rc \
+    meta_init.connectivity.rc \
+    meta_init.modem.rc \
+    meta_init.project.rc \
+    init.rc
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/etc/twrp.fstab:recovery/root/etc/twrp.fstab \
+    $(LOCAL_PATH)/recovery/sbin/fuelgauged_static:recovery/root/sbin/fuelgauged_static
+
+# ADB Debugging
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    persist.logd.logpersistd=logcatd
+
+# Audio
+PRODUCT_PACKAGES += \
+    audio.a2dp.default \
+    audio.usb.default \
+    audio.r_submix.default \
+    audio_policy.default \
+    libaudio-resampler \
+    libtinyalsa \
+    libaudiopolicymanagerdefault \
+    libtinycompress \
+    libtinymix \
+    libtinyxml
+
+# Display
+PRODUCT_PACKAGES += \
+    libion
+
+# FM
+PRODUCT_PACKAGES += \
+    libfmjni \
+    FMRadio
+
+# GPS
+$(call inherit-product, device/common/gps/gps_us_supl.mk)
+
+PRODUCT_PACKAGES += \
+    libcurl \
+    libepos \
+    gps.mt6755
+
+#mtk
+PRODUCT_PACKAGES += \
+    EngineerMode \
+    YGPS
+
+# Mediatek platform
+PRODUCT_PACKAGES += \
+   libtuba
+
+# Radio dependencies
+PRODUCT_PACKAGES += \
+    muxreport \
+    terservice
+
+# Wifi
+PRODUCT_PACKAGES += \
+    libwpa_client \
+    hostapd \
+    wpa_supplicant \
+
+# Charger Mode
+#PRODUCT_PACKAGES += \
+#    charger_res_images
+
+PRODUCT_PACKAGES += \
+    Doze
+
+ifneq ($(TARGET_BUILD_VARIANT), eng)
+# Mediatek logging service
+PRODUCT_PACKAGES += \
+    mobile_log_d \
+    netdiag \
+    tcpdump
+endif
+
+# Camera
+PRODUCT_PACKAGES += \
+    Snap
+
+# Media
+PRODUCT_COPY_FILES += \
+	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \

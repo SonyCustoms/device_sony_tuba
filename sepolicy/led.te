@@ -1,0 +1,56 @@
+type led_service, domain;
+type led_service_exec, exec_type, file_type;
+type led_service_socket, file_type, mlstrustedobject;
+init_daemon_domain(led_service)
+
+type ecryptfs, domain;
+type ecryptfs_exec, exec_type, file_type;
+init_daemon_domain(ecryptfs)
+
+allow debuggerd led_service:process { getattr ptrace };
+allow guiext-server led_service:binder { transfer call };
+allow guiext-server led_service:fd use;
+allow hotknot_native led_service:binder transfer;
+allow init led_service:process { siginh transition rlimitinh };
+allow init led_service_exec:file { read getattr open execute };
+allow init led_service_socket:blk_file relabelto;
+allow init led_service_socket:chr_file relabelto;
+allow init led_service_socket:dir { search setattr read create getattr write relabelfrom ioctl rmdir remove_name relabelto open add_name };
+allow init led_service_socket:fifo_file { setattr read create relabelfrom getattr relabelto unlink open };
+allow init led_service_socket:file { setattr read create write relabelfrom getattr relabelto unlink open };
+allow init led_service_socket:lnk_file { setattr relabelfrom create getattr relabelto unlink };
+allow init led_service_socket:sock_file { setattr read create relabelfrom getattr relabelto unlink open };
+allow init led_service_tmpfs:blk_file relabelto;
+allow init led_service_tmpfs:chr_file relabelto;
+allow init led_service_tmpfs:dir { search setattr read create getattr write relabelfrom ioctl rmdir remove_name relabelto open add_name };
+allow init led_service_tmpfs:fifo_file { setattr read create relabelfrom getattr relabelto unlink open };
+allow init led_service_tmpfs:file { setattr read create write relabelfrom getattr relabelto unlink open };
+allow init led_service_tmpfs:lnk_file { setattr relabelfrom create getattr relabelto unlink };
+allow init led_service_tmpfs:sock_file { setattr read create relabelfrom getattr relabelto unlink open };
+allow led_service ecryptfs:dir { rename search setattr read lock create reparent getattr write ioctl rmdir remove_name open add_name };
+allow led_service ecryptfs:file { rename setattr read lock create getattr write ioctl unlink open append };
+allow led_service guiext-server:binder { transfer call };
+allow led_service guiext-server:fd use;
+allow led_service guiext-server_service:service_manager find;
+allow led_service hotknot_native:binder { transfer call };
+allow led_service hotknot_native:fd use;
+allow led_service init:process sigchld;
+allow led_service led_service:dir { search read lock getattr ioctl open };
+allow led_service led_service:fd use;
+allow led_service led_service:fifo_file { read lock getattr write ioctl open append };
+allow led_service led_service:file { read lock getattr write ioctl open append };
+allow led_service led_service:lnk_file { read lock ioctl open getattr };
+allow led_service led_service:process { fork getsession sigkill sigchld setpgid setsched signal getattr setcap sigstop getcap getpgid getsched signull setrlimit };
+allow led_service led_service:unix_dgram_socket { setopt setattr read lock create sendto getattr write ioctl connect shutdown bind getopt append };
+allow led_service led_service:unix_stream_socket { connectto setopt setattr read lock create getattr accept write ioctl connect shutdown bind getopt append listen };
+allow led_service led_service_exec:file { read open getattr entrypoint execute };
+allow led_service led_service_socket:unix_stream_socket { setopt setattr read lock create getattr write ioctl connect shutdown bind getopt append };
+allow led_service led_service_tmpfs:file { read write };
+allow led_service program_binary:binder { transfer call };
+allow led_service program_binary:fd use;
+allow led_service sysfs_leds:file { read write open };
+allow program_binary led_service:binder transfer;
+allow servicemanager led_service:binder transfer;
+allow system_server led_service:unix_stream_socket { read write connectto };
+allow system_server led_service_socket:sock_file { read lock getattr write ioctl open append };
+
