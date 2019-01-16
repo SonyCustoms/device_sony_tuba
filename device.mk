@@ -137,8 +137,7 @@ PRODUCT_PACKAGES += \
     factory_init.rc \
     meta_init.connectivity.rc \
     meta_init.modem.rc \
-    meta_init.project.rc \
-    init.rc
+    meta_init.project.rc
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/etc/twrp.fstab:recovery/root/etc/twrp.fstab \

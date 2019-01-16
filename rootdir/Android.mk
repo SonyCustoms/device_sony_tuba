@@ -20,7 +20,6 @@ $(call add-rootdir-targets, \
     init.usb.configfs.rc \
     init.usb.rc \
     ueventd.mt6755.rc \
-    init.rc \
     factory_init.connectivity.rc \
     factory_init.project.rc \
     factory_init.rc \
