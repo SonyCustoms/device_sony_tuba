@@ -1,4 +1,3 @@
-# ==============================================
-# MTK Policy Rule
-# ============
-
+allow servicemanager hal_fingerprint_default:dir search;
+allow servicemanager hal_fingerprint_default:file r_file_perms;
+allow servicemanager hal_fingerprint_default:process getattr;

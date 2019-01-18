@@ -53,4 +53,4 @@ allow program_binary led_service:binder transfer;
 allow servicemanager led_service:binder transfer;
 allow system_server led_service:unix_stream_socket { read write connectto };
 allow system_server led_service_socket:sock_file { read lock getattr write ioctl open append };
-
+allow led_service sysfs:file { read write open };

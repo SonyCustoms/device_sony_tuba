@@ -1,60 +1,48 @@
-#
-# Copyright (C) 2016 The LineageOS Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+LOCAL_PATH := device/sony/tuba
 
+include $(LOCAL_PATH)/platform/board.mk
+
+# Platform
+#ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_BOARD_PLATFORM := mt6755
+TARGET_NO_BOOTLOADER := true
 
-DEVICE_PATH := device/sony/tuba
+# CPU
+TARGET_ARCH := arm64
+TARGET_ARCH_VARIANT := armv8-a
+TARGET_CPU_ABI := arm64-v8a
+TARGET_CPU_ABI2 :=
+TARGET_CPU_VARIANT := cortex-a53
+#TARGET_CPU_SMP := true
 
-MTK_PROJECT_CONFIG ?= $(DEVICE_PATH)/ProjectConfig.mk
-include $(MTK_PROJECT_CONFIG)
+TARGET_2ND_ARCH := arm
+TARGET_2ND_ARCH_VARIANT := armv7-a-neon
+TARGET_2ND_CPU_ABI := armeabi-v7a
+TARGET_2ND_CPU_ABI2 := armeabi
+TARGET_2ND_CPU_VARIANT := cortex-a53
+TARGET_BOARD_SUFFIX := _64
+TARGET_USES_64_BIT_BINDER := true
 
-MTK_INTERNAL_CDEFS := $(foreach t,$(AUTO_ADD_GLOBAL_DEFINE_BY_NAME),$(if $(filter-out no NO none NONE false FALSE,$($(t))),-D$(t)))
-MTK_INTERNAL_CDEFS += $(foreach t,$(AUTO_ADD_GLOBAL_DEFINE_BY_VALUE),$(if $(filter-out no NO none NONE false FALSE,$($(t))),$(foreach v,$(shell echo $($(t)) | tr '[a-z]' '[A-Z]'),-D$(v))))
-MTK_INTERNAL_CDEFS += $(foreach t,$(AUTO_ADD_GLOBAL_DEFINE_BY_NAME_VALUE),$(if $(filter-out no NO none NONE false FALSE,$($(t))),-D$(t)=\"$($(t))\"))
+TARGET_CPU_CORTEX_A53 := true
 
-BOARD_GLOBAL_CFLAGS += $(MTK_INTERNAL_CDEFS)
-BOARD_GLOBAL_CPPFLAGS += $(MTK_INTERNAL_CDEFS)
+TARGET_BOOTLOADER_BOARD_NAME := mt6755
 
-# Kernel informations
+# Kernel
+TARGET_USES_64_BIT_BINDER := true
+TARGET_IS_64_BIT := true
+LZMA_RAMDISK_TARGETS := boot,recovery
+BOARD_USES_FULL_RECOVERY_IMAGE := true
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 enforcing=0 androidboot.selinux=permissive loglevel=8
 BOARD_MKBOOTIMG_ARGS := --board 1465391499 --ramdisk_offset 0x04f88000 --second_offset 0x00e88000 --tags_offset 0x03f88000
-
-# LightHAL
-TARGET_PROVIDES_LIBLIGHT := true
-
-# Kernel properties
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
-
 TARGET_KERNEL_SOURCE := kernel/sony/tuba
 TARGET_KERNEL_CONFIG := tuba_defconfig
 
-
-TARGET_BOOTLOADER_BOARD_NAME := tuba
-
-#BB
-BUSYBOX_CONFIG:=full
-BUSYBOX_SUFFIX:=static
-
-# Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
-
-WITH_SU := true
+# Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -65,120 +53,29 @@ BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 27468479488
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-# TWRP
-DEVICE_RESOLUTION := 720x1280
-DEVICE_SCREEN_WIDTH := 720
-DEVICE_SCREEN_HEIGHT := 1280
-TW_THEME := portrait_hdpi
+BOARD_HAS_LARGE_FILESYSTEM := true
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
 
-TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
-
-BLOCK_BASED_OTA := false
-
-# Architecture
-TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv8-a
-TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 :=
-TARGET_CPU_VARIANT := cortex-a53
-
-TARGET_2ND_ARCH := arm
-TARGET_2ND_ARCH_VARIANT := armv7-a-neon
-TARGET_2ND_CPU_ABI := armeabi-v7a
-TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := cortex-a53
-
-BOARD_FLASH_BLOCK_SIZE := 4096
-
-# FSTAB
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/fstab.mt6755
-
-# Audio
-BOARD_USES_MTK_AUDIO := true
-
-# Disable memcpy opt (for audio libraries)
-TARGET_CPU_MEMCPY_OPT_DISABLE := true
-
-# Bootloader
-TARGET_NO_BOOTLOADER := true
-
-# Kernel
-TARGET_USES_64_BIT_BINDER := true
-
-# Bluetooth
-BOARD_HAVE_BLUETOOTH := true
-BOARD_BLUETOOTH_BDROID_HCILP_INCLUDED := 0
-BOARD_CONNECTIVITY_MODULE := conn_soc
-
-# init
-TARGET_PROVIDES_INIT_RC := true
+# Include needed symbols
+TARGET_INCLUDE_LIBTUBA := true
+LINKER_FORCED_SHIM_LIBS := /system/vendor/lib64/hw/hwcomposer.mt6755.so|libtuba.so
 
 # Display
-USE_OPENGL_RENDERER := true
-NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
-TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
-TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
-MAX_VIRTUAL_DISPLAY_DIMENSION := 1
-PRESENT_TIME_OFFSET_FROM_VSYNC_NS := 0
-MTK_HWC_SUPPORT := yes
-MTK_HWC_VERSION := 1.5.0
+DEVICE_RESOLUTION := 720x1280
+TARGET_SCREEN_WIDTH := 720
+TARGET_SCREEN_HEIGHT := 1280
 
-# Mediatek support
-BOARD_HAS_MTK_HARDWARE := true
-BOARD_USES_MTK_HARDWARE := true
-MTK_HARDWARE := true
+# Bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 
-# Media
-TARGET_HAS_LEGACY_CAMERA_HAL1 := true
-TARGET_OMX_LEGACY_RESCALING := true
-
-# GPS
-ifeq ($(MTK_GPS_SUPPORT), yes)
-    BOARD_GPS_LIBRARIES := true
-else
-    BOARD_GPS_LIBRARIES := false
-endif
-BOARD_MEDIATEK_USES_GPS := true
+# LightHAL
+TARGET_PROVIDES_LIBLIGHT := true
 
 # Recovery
-TARGET_USERIMAGES_USE_EXT4 := true
-
-#BOARD_RIL_CLASS := ../../../device/sony/tuba/ril
-
-# Sensors
-TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
-TARGET_NO_SENSOR_PERMISSION_CHECK := true
-
-# SELinux
-BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
-BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
-#POLICYVERS := 29
-
-# Wireless
-WPA_SUPPLICANT_VERSION := VER_0_8_X
-BOARD_HOSTAPD_DRIVER := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_mt66xx
-BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_mt66xx
-WIFI_DRIVER_FW_PATH_PARAM := /dev/wmtWifi
-WIFI_DRIVER_FW_PATH_AP := AP
-WIFI_DRIVER_FW_PATH_STA := STA
-WIFI_DRIVER_FW_PATH_P2P := P2P
-WIFI_DRIVER_STATE_CTRL_PARAM := /dev/wmtWifi
-WIFI_DRIVER_STATE_ON := 1
-WIFI_DRIVER_STATE_OFF := 0
-
-# Release Tools
-TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
-
-# Misc
-EXTENDED_FONT_FOOTPRINT := true
-
-#optimizations
-MALLOC_SVELTE := true
+TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/fstab.mt6755
 
 # TWRP
-TW_DEFAULT_BRIGHTNESS := 80
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
 TW_DEVICE_VERSION := 0
@@ -200,8 +97,7 @@ TW_CRYPTO_KEY_LOC := "footer"
 TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,discard,noauto_da_alloc,data =ordered"
 TW_INCLUDE_L_CRYPTO := true
 
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
 
-# Time Zone data for Recovery
-PRODUCT_COPY_FILES += \
-    bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
+# SELinux
+BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy

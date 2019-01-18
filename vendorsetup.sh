@@ -1,3 +1,2 @@
-add_lunch_combo lineage_tuba-user
-add_lunch_combo lineage_tuba-userdebug
-add_lunch_combo lineage_tuba-eng
+add_lunch_combo full_tuba-user
+add_lunch_combo full_tuba-eng
