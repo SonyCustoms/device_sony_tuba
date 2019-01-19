@@ -12,7 +12,7 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 PRODUCT_RELEASE_NAME := XA
 
 PRODUCT_DEVICE := tuba
-PRODUCT_NAME := full_tuba
+PRODUCT_NAME := lineage_tuba
 PRODUCT_BRAND := Sony
 PRODUCT_MODEL := Xperia XA
 PRODUCT_MANUFACTURER := Sony
