@@ -3,13 +3,11 @@
 # IMPORTANT: Do not create world writable files or directories.
 # This is a common source of Android security bugs.
 #
-import factory_init.connectivity.rc
 import /init.environ.rc
-import init.fon.rc
-import init.trustonic.rc
-import init.microtrust.rc
-import init.aee.rc
-import init.sony-trimarea.rc
+import meta_init.connectivity.rc
+import meta_init.project.rc
+#Make sure meta_init.modem.rc is the last rc file.
+import meta_init.modem.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
@@ -35,8 +33,7 @@ on early-init
 #INTERNAL_END
 
 on init
-
-sysclktz 0
+    sysclktz 0
 
     # Mix device-specific information into the entropy pool
     copy /proc/cmdline /dev/urandom
@@ -47,8 +44,8 @@ loglevel 5
     # Backward compatibility.
     symlink /system/etc /etc
     symlink /sys/kernel/debug /d
-    
-# Link /vendor to /system/vendor for devices without a vendor partition.
+
+    # Link /vendor to /system/vendor for devices without a vendor partition.
     symlink /system/vendor /vendor
 
     # Mount cgroup mount point for cpu accounting
@@ -66,7 +63,7 @@ loglevel 5
     chmod 0664 /dev/stune/tasks
     chmod 0664 /dev/stune/foreground/tasks
 
-# Mount staging areas for devices managed by vold
+    # Mount staging areas for devices managed by vold
     # See storage config details at http://source.android.com/tech/storage/
     mount tmpfs tmpfs /mnt mode=0755,uid=0,gid=1000
     restorecon_recursive /mnt
@@ -119,34 +116,40 @@ loglevel 5
     write /proc/sys/kernel/sched_latency_ns 10000000
     write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
     write /proc/sys/kernel/sched_compat_yield 1
-    write /proc/sys/kernel/sched_child_runs_first 0
 
-    #INTERNAL_START
+#INTERNAL_START
     mkdir /protect_f 0771 system system
     mkdir /protect_s 0771 system system
+    #Create nvdata mount point
+    mkdir /nvdata 0771 system system
+
     #Create CIP mount point
     mkdir /custom
 
     mkdir /mnt/cd-rom 0000 system system
-    #INTERNAL_END
 
-    # Healthd can trigger a full boot from charger mode by signaling this
-    # property when the power button is held.
-    on property:sys.boot_from_charger_mode=1
+    write /d/mtkfb enable_idlemgr:0
+#INTERNAL_END
+
+
+# Healthd can trigger a full boot from charger mode by signaling this
+# property when the power button is held.
+on property:sys.boot_from_charger_mode=1
     class_stop charger
     trigger late-init
 
 # Load properties from /system/ + /factory after fs mount.
-    on load_system_props_action
+on load_system_props_action
     load_system_props
 
-    on load_persist_props_action
+on load_persist_props_action
     load_persist_props
     start logd
     start logd-reinit
 
-    # Mount filesystems and start core system services.
-    on late-init
+
+# Mount filesystems and start core system services.
+on late-init
     trigger early-fs
     trigger fs
     trigger post-fs
@@ -165,7 +168,6 @@ loglevel 5
     trigger early-boot
     trigger boot
 
-# mount different fs start
 on fs
     mkdir /dev/usb-ffs 0770 shell shell
     mkdir /dev/usb-ffs/adb 0770 shell shell
@@ -176,7 +178,6 @@ on fs
     mount_all /fstab.mt6755 multi_init.rc
     write /proc/bootprof "INIT:Mount_END"
 #INTERNAL_END
-# mount different fs end
 
 on post-fs
     start logd
@@ -193,24 +194,12 @@ on post-fs
     # Support legacy paths
     symlink /sdcard /storage/sdcard0
 
-    chown system system /system/data
-    mkdir /system/cache 0770 system cache
-    # We restorecon /cache in case the cache partition has been reset.
-    restorecon_recursive /cache
-
-    # Same reason as /data above
+    # We chown/chmod /cache again so because mount is run as root + defaults
     chown system cache /cache
     chmod 0770 /cache
-
-
-    # This may have been created by the recovery system with odd permissions
-    chown system cache /cache/recovery
-    chmod 0770 /cache/recovery
-
-    #change permissions on vmallocinfo so we can grab it from bugreports
-    chown root log /proc/vmallocinfo
-    chmod 0440 /proc/vmallocinfo
-
+    # We restorecon /cache in case the cache partition has been reset.
+    restorecon_recursive /cache
+    
     #change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
     chown root system /proc/kmsg
     chmod 0440 /proc/kmsg
@@ -218,7 +207,7 @@ on post-fs
     chmod 0220 /proc/sysrq-trigger
     chown system log /proc/last_kmsg
     chmod 0440 /proc/last_kmsg
-    
+
     # make the selinux kernel policy world-readable
     chmod 0444 /sys/fs/selinux/policy
 
@@ -226,21 +215,16 @@ on post-fs
     mkdir /cache/lost+found 0770 root root
 
 #INTERNAL_START
-    mkdir /cache/recovery 0770 system system
     chown system system /protect_f
     chmod 0770 /protect_f
 
     chown system system /protect_s
     chmod 0770 /protect_s
+
 #INTERNAL_END
+    
 
 on post-fs-data
-	#Thermal	
-	mkdir /data/.tp/ 0775 system system
-
-    # We chown/chmod /data again so because mount is run as root + defaults
-    chown system system /system/data
-    chmod 0777 /system/data
     # We chown/chmod /data again so because mount is run as root + defaults
     chown system system /data
     chmod 0771 /data
@@ -250,32 +234,10 @@ on post-fs-data
     # start debuggerd to make debugging early-boot crashes easier.
     start debuggerd
     start debuggerd64
-   
-    # We chown/chmod /data again so because mount is run as root + defaults
-    
-    chown root system /proc/sysrq-trigger
-    chmod 0220 /proc/sysrq-trigger
 
-    # Emulated internal storage area
-    mkdir /data/media 0770 media_rw media_rw
-
-    # Make sure we have the device encryption key
+    # Make sure we have the device encryption key.
     start vold
     installkey /data
-
-# create basic filesystem structure
-    #mkdir /data/nvram 2770 root system
-    # We chown/chmod /nvdata again so because mount is run as root + defaults
-    chown root system /nvdata
-    chmod 0771 /nvdata
-    symlink /nvdata /data/nvram
-    mkdir /nvdata/media 0771 media audio
-
-    # Set SELinux security contexts on upgrade or policy update.
-    restorecon_recursive /nvdata
-
-# Emulated internal storage area
-    mkdir /data/media 0770 media_rw media_rw
 
     # Start bootcharting as soon as possible after the data partition is
     # mounted to collect more data.
@@ -321,11 +283,10 @@ on post-fs-data
     mkdir /data/data 0771 system system
     mkdir /data/property 0700 root root
     mkdir /data/tombstones 0771 system system
-    mkdir /data/misc/media 0700 media media
-    mkdir /data/misc/vold 0700 root root
 
-   # create the lost+found directories, so as to enforce our permissions
+    # create the lost+found directories, so as to enforce our permissions
     mkdir /data/lost+found 0770 root root
+
 
     mkdir /data/anr 0775 system system
 
@@ -339,8 +300,8 @@ on post-fs-data
     # Create all remaining /data root dirs so that they are made through init
     # and get proper encryption policy installed
     mkdir /data/backup 0700 system system
-    mkdir /data/media 0770 media_rw media_rw
     mkdir /data/ss 0700 system system
+
     mkdir /data/system 0775 system system
     mkdir /data/system/heapdump 0700 system system
     mkdir /data/system/users 0775 system system
@@ -369,146 +330,80 @@ on post-fs-data
     # Check any timezone data in /data is newer than the copy in /system, delete if not.
     exec - system system -- /system/bin/tzdatacheck /system/usr/share/zoneinfo /data/misc/zoneinfo
 
-    
-    # VIA flashlessd service
-    mkdir /data/flashless 0770 radio nvram
-    mkdir /data/nvram/md_via 0770 root nvram
-    chmod 0660 /dev/ttyMT4
-    chown radio radio /dev/ttyMT4
-    chmod 0660 /dev/vmodem
-    chown radio radio /dev/vmodem
-    
-    #VIA pppd service
-    mkdir /data/pppd_via 0770 radio system
-    
-    # md32 boot
-    chown root system /dev/md32
-    chmod 0440 /dev/md32
-    chown root system /sys/class/misc/md32/md32_mobile_log
-    chmod 0660 /sys/class/misc/md32/md32_mobile_log
-    write /sys/class/misc/md32/md32_boot 1
-    
-    # dhcp server 
-    mkdir /data/misc/dhcp 0770 dhcp dhcp
-    chown dhcp dhcp /data/misc/dhcp
-
-    # device info interface
-    chmod 0440 /dev/devmap
-    chown root system /dev/devmap
-
-
-
-    #change partition permission
-    exec /vendor/etc/partition_permission.sh
-    
-#INTERNAL_START
-#SeLinux
-    mkdir /data/ccci_cfg 0770 system radio
-    restorecon /data/ccci_cfg
-    restorecon_recursive /protect_f
-    restorecon_recursive /protect_s
-
-## Custom pos-fs area (START)
-# Please add custom fs operation below
-
-    # Touch Panel
-    chown root diag /sys/module/tpd_setting/parameters/tpd_calmat
-    chown root diag /sys/module/tpd_setting/parameters/tpd_em_debounce_time
-    chown root diag /sys/module/tpd_debug/parameters/tpd_em_log
-    chown root diag /sys/module/tpd_debug/parameters/tpd_em_log_to_fs
-
-    # RTC
-    mkdir /data/misc/rtc 0770 system system
-
-    # Modem related device nodes
-    mkdir /data/nvram/md  0770 root system
-    mkdir /data/nvram/md2 0770 root system
-    mkdir /data/nvram/md3  0770 root system
-    mkdir /data/md3	0770 root system
-#  Build-in Modified - S
-#    insmod /vendor/lib/modules/ccci_plat.ko
-#    insmod /vendor/lib/modules/ccci.ko
-#  Build-in Modified - E
-#   chown ccci ccci /sys/class/BOOT/BOOT/boot/md
-    chown radio radio /sys/kernel/ccci/boot
-
-    # M4U
-    #insmod /vendor/lib/modules/m4u.ko
-    #mknod /dev/M4U_device c 188 0
-    chmod 0444 /dev/M4U_device
-    
-    #set mlock limit to infinate (for m4u operation)
-    setrlimit 8 -1 -1
-
-    # Sensor
-    chmod 0666 /dev/hwmsensor
-    chmod 0666 /dev/gyroscope
-    chmod 0666 /dev/msensor
-    chmod 0666 /dev/gsensor
-    chmod 0666 /dev/alsps
-
-    #VideoCodec
-    chmod 0666 /dev/Vcodec
-
-
-    mkdir /data/amit/
-
-    # GPIO
-    chmod 0666 /dev/mtgpio
-
-    chmod 0666 /dev/exm0
-
-    # TTY
-    # For ATCID
-    chmod 0660 /dev/ttyGS0 
-    chown system radio /dev/ttyGS0 
-    chmod 0660 /dev/ttyGS1 
-    chown system /dev/ttyGS1 
-    # For BT relayer
-    chown bluetooth radio /dev/ttyGS2
-    chmod 0660 /dev/ttyGS2
-    # For MD Logger
-    chown system radio /dev/ttyGS3
-    chmod 0660 /dev/ttyGS3
-
-    #NFC
-    rm /data/mtknfc_server
-
-## Custom pos_fs area (END) 
-#INTERNAL_END
-
-    # Separate location for storing security policy files on data
-    mkdir /data/security 0711 system system
-
-    # Reload policy from /data/security if present.
-    setprop selinux.reload_policy 1
-
-    # Set SELinux security contexts on upgrade or policy update.
-    restorecon_recursive /data
-
     # If there is no fs-post-data action in the init.<device>.rc file, you
     # must uncomment this line, otherwise encrypted filesystems
     # won't work.
     # Set indication (checked by vold) that we have finished this action
-    setprop vold.post_fs_data_done 1
+    #setprop vold.post_fs_data_done 1
+
+#INTERNAL_START
+    # Set SELinux security contexts on upgrade or policy update.
+    # We chown/chmod /nvdata again so because mount is run as root + defaults
+    chown root system /nvdata
+    chmod 0771 /nvdata
+    symlink /nvdata /data/nvram
+    mkdir /nvdata/media 0771 media audio
+
+    # Set SELinux security contexts on upgrade or policy update.
+    restorecon_recursive /nvdata
+    # WiFi
+    mkdir /data/misc/wifi 0770 system wifi
+    mkdir /data/misc/wifi/sockets 0770 system wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+    #give system access to rfkill device node
+    chmod 0660 /dev/rfkill
+
+    # RTC
+    mkdir /data/misc/rtc 0770 system system
+    
+    # Android SEC related device nodes
+    chmod 0660 /dev/sec
+    chown root system /dev/sec
+
+    #change partition permission
+#preloader
+    chmod 0640 /dev/mtd/mtd0
+    chown root system /dev/mtd/mtd0
+#pro_info		
+    chmod 0660 /dev/mtd/mtd1
+    chown root system /dev/mtd/mtd1
+#nvram
+    chmod 0660 /dev/mtd/mtd2
+    chown root system /dev/mtd/mtd2
+#seccfg
+    chmod 0660 /dev/mtd/mtd4
+    chown root system /dev/mtd/mtd4
+#bootimg
+    chmod 0640 /dev/mtd/mtd6
+    chown root system /dev/mtd/mtd6
+#recovery
+    chmod 0640 /dev/mtd/mtd7
+    chown root system /dev/mtd/mtd7
+#sec_ro
+    chmod 0640 /dev/mtd/mtd8
+    chown root system /dev/mtd/mtd8
+#misc
+    chmod 0660 /dev/mtd/mtd9
+    chown root system /dev/mtd/mtd9
+
+    chmod 0666 /dev/exm0
+
+#INTERNAL_END
 
 on boot
 
-    #VIA device property
-    setprop viatel.device.asci uart.4.ttyMT
-    setprop viatel.device.fls  sdio.3.ttySDIO
-    setprop viatel.device.at   sdio.4.ttySDIO
-    setprop viatel.device.data sdio.1.ttySDIO
 
 # basic network init
     ifup lo
     hostname localhost
     domainname localdomain
 
-    #INTERNAL_START
-    # Start default class, this line is very important!!
+    setprop logmuch.detect.value 10000
+
+#INTERNAL_START
     class_start default
-    #INTERNAL_END
+#INTERNAL_END
     class_start core
 
 on nonencrypted
@@ -555,11 +450,15 @@ on property:vold.decrypt=trigger_shutdown_framework
     class_reset late_start
     class_reset main
 
+on property:sys.powerctl=*
+    powerctl ${sys.powerctl}
+## Daemon processes to be run by init.
+##
 service ueventd /sbin/ueventd
     class core
     critical
     seclabel u:r:ueventd:s0
-    
+
 service console /system/bin/sh
     class core
     console
@@ -567,9 +466,6 @@ service console /system/bin/sh
     user shell
     group shell log readproc
     seclabel u:r:shell:s0
-
-on property:sys.powerctl=*
-    powerctl ${sys.powerctl}
 
 on property:ro.debuggable=1
     # Give writes to anyone for the trace folder on debug builds.
@@ -585,49 +481,7 @@ service adbd /sbin/adbd --root_seclabel=u:r:su:s0
     seclabel u:r:adbd:s0
 
 #INTERNAL_START
-## Custom service area (START)
-# Please add custom service below
-
-service thermal_manager /vendor/bin/thermal_manager
-    user root
-	group system
-    oneshot
-
-service permission_check /vendor/bin/permission_check
-    user root
-    group system radio
-    oneshot
-
-service pl_calibration /system/bin/pl_calibration
-    class main
-    user root
-    group system
-    oneshot
-
-service ccci_fsd /vendor/bin/ccci_fsd 0
-    user radio
-    group radio system
-    oneshot
-
-service ccci_mdinit /vendor/bin/ccci_mdinit 0
-    user system
-    group radio system
-    oneshot
-
-service ccci3_fsd /vendor/bin/ccci_fsd 2
-    user radio
-    group radio system
-    oneshot
-
-service ccci3_mdinit /vendor/bin/ccci_mdinit 2
-    user system
-    group radio system
-    oneshot
-
-service ccci_rpcd /vendor/bin/ccci_rpcd 0
-    user radio
-    group radio system
-    oneshot
+service meta_tst /vendor/bin/meta_tst
 
 service nvram_daemon /vendor/bin/nvram_daemon
     class main
@@ -643,75 +497,18 @@ service nvram_tuba /system/bin/nvram_tuba
     oneshot
 #CEI comments end
 
-service mdlogger /vendor/bin/mdlogger
+service pl_calibration /system/bin/pl_calibration
     class main
-    user shell
-    group shell system radio sdcard_rw inet
-    disabled
+    user root
+    group system
     oneshot
 
-service dualmdlogger /vendor/bin/dualmdlogger
+service fuelgauged /system/bin/fuelgauged
     class main
-    user shell
-    group shell system radio sdcard_rw inet
-    disabled
-    oneshot
-
-
-service factory_no_image /vendor/bin/factory
 
 service mobile_log_d /vendor/bin/mobile_log_d
-	class main
-
-#service hald /vendor/bin/hald
-#    class main
-#    socket hald stream 0660 root system
-    
-#service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant
-#    group wifi
-#    disabled
-#    oneshot    
-#
-# Connectivity related services (End)
-#
-#
-## Custom service area (END)
-
-
-service emdlogger1 /vendor/bin/emdlogger1
     class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
 
-service emdlogger2 /vendor/bin/emdlogger2
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service emdlogger3 /vendor/bin/emdlogger3
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service emdlogger5 /vendor/bin/emdlogger5
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service emdlogger6 /vendor/bin/emdlogger6
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
 
 #mass_storage,adb,acm
 on property:ro.boot.usbconfig=0
@@ -723,7 +520,6 @@ on property:ro.boot.usbconfig=0
     write /sys/class/android_usb/android0/functions mass_storage,adb,acm
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    setprop sys.usb.acm_idx 1
 
 #acm
 on property:ro.boot.usbconfig=1
@@ -735,36 +531,4 @@ on property:ro.boot.usbconfig=1
     write /sys/class/android_usb/android0/functions acm
     write /sys/class/android_usb/android0/bDeviceClass 02
     write /sys/class/android_usb/android0/enable 1
-
-#singloe modem comport for factory mode   
-on property:sys.usb.config=gs3,dual_acm
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor $sys.usb.vid
-    write /sys/class/android_usb/android0/idProduct 202E
-    write /sys/class/android_usb/android0/f_acm/port_index 1,4
-    write /sys/devices/platform/mt_usb/saving 1
-    write /sys/class/android_usb/android0/functions mass_storage,adb,acm
-    write /sys/class/android_usb/android0/enable 1
-    chown system radio /dev/ttyGS3
-    chmod 0660 /dev/ttyGS3
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-    setprop sys.usb.acm_idx 1,4
-    
-#dual modem comport for factory mode
-on property:sys.usb.config=gs1gs3,dual_acm
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor $sys.usb.vid
-    write /sys/class/android_usb/android0/idProduct 202F
-    write /sys/class/android_usb/android0/f_acm/port_index 1,2,4
-    write /sys/devices/platform/mt_usb/saving 1
-    write /sys/class/android_usb/android0/functions adb,acm
-    write /sys/class/android_usb/android0/enable 1
-    chown system radio /dev/ttyGS3
-    chmod 0660 /dev/ttyGS3
-    chown system radio /dev/ttyGS1
-    chmod 0660 /dev/ttyGS1
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-    setprop sys.usb.acm_idx 1,2,4
 #INTERNAL_END

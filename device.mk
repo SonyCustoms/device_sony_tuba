@@ -34,10 +34,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
-# Init
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/init.target.rc:root/init.target.rc
-
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
@@ -122,22 +118,22 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Root
 PRODUCT_PACKAGES += \
     fstab.mt6755 \
-    init.connectivity.rc \
     init.modem.rc \
-    init.mt6755.rc \
-    init.mt6755.usb.rc \
-    init.project.rc \
-    init.recovery.mt6755.rc \
-    init.rilproxy.rc \
     init.usb.configfs.rc \
     init.usb.rc \
+    init.mt6755.rc \
+    init.mt6755.usb.rc \
     ueventd.mt6755.rc \
-    factory_init.connectivity.rc \
     factory_init.project.rc \
     factory_init.rc \
     meta_init.connectivity.rc \
     meta_init.modem.rc \
-    meta_init.project.rc
+    meta_init.project.rc \
+    multi_init.rc \
+    init.connectivity.rc \
+    init.rilproxy.rc \
+    init.volte.rc \
+    init.mal.rc
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/etc/twrp.fstab:recovery/root/etc/twrp.fstab \

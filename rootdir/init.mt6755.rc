@@ -1,14 +1,7 @@
 import init.connectivity.rc
-import init.project.rc
-import init.aee.rc
 import init.rilproxy.rc
 import init.volte.rc
 import init.mal.rc
-import init.epdg.rc
-import init.wfca.rc
-import init.qns.rc
-import init.common_svc.rc
-import init.target.rc
 import init.modem.rc
 
 on early-init
@@ -17,6 +10,7 @@ on early-init
     write /sys/class/leds/lcd-backlight/trigger "backlight"
 
 on init
+    loglevel 8
     export LD_PRELOAD "libtuba.so"
 
     # Expose exp_main
@@ -100,7 +94,8 @@ on fs
 
 on post-fs
     symlink /sdcard /storage/sdcard0
-
+    chmod 0660 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/nvram
+    chown root system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/nvram
     #change permissions for mediaserver
     chown root media /proc/clkmgr/mipi_test
 
@@ -142,11 +137,10 @@ on post-fs-data
     restorecon_recursive /nvcfg
 
     # create basic filesystem structure
-    # mkdir /data/nvram 2770 root system
+    # mkdir /data/nvram 0770 root system
     # We chown/chmod /nvdata again so because mount is run as root + defaults
     chown root system /nvdata
-    chmod 0771 /nvdata
-    rm /data/nvram
+    chmod 0770 /nvdata
     symlink /nvdata /data/nvram
     mkdir /nvdata/media 0771 media audio
 
