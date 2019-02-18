@@ -132,6 +132,8 @@ PRODUCT_PACKAGES += \
     init.connectivity.rc \
     init.rilproxy.rc \
     init.volte.rc \
+    init.project.rc \
+    init.recovery.mt6755.rc \
     init.mal.rc
 
 PRODUCT_COPY_FILES += \

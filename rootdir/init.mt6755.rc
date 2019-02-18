@@ -2,6 +2,7 @@ import init.connectivity.rc
 import init.rilproxy.rc
 import init.volte.rc
 import init.mal.rc
+import init.project.rc
 import init.modem.rc
 
 on early-init
@@ -93,7 +94,7 @@ on fs
 
 on post-fs
     symlink /sdcard /storage/sdcard0
-    chmod 0660 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/nvram
+    chmod 0771 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/nvram
     chown root system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/nvram
     #change permissions for mediaserver
     chown root media /proc/clkmgr/mipi_test
