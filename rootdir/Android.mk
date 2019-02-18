@@ -21,7 +21,6 @@ $(call add-rootdir-targets, \
     meta_init.connectivity.rc \
     meta_init.modem.rc \
     meta_init.project.rc \
-    multi_init.rc \
     init.connectivity.rc \
     init.rilproxy.rc \
     init.volte.rc \
