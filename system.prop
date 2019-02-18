@@ -1,73 +1,208 @@
-# RIL
+# logging
+service.adb.root=1
+persist.sys.root_access=0
+ro.sys.usb.storage.type=mtp,adb
+persist.log.tag.AT=I
+persist.log.tag.RILMUXD=I
+persist.log.tag.RILC-MTK=I
+persist.log.tag.RILC=I
+persist.log.tag.RfxMainThread=I
+persist.log.tag.RfxRoot=I
+persist.log.tag.RfxRilAdapter=I
+persist.log.tag.RfxController=I
+persist.log.tag.RILC-RP=I
+persist.log.tag.RIL-DATA=I
+persist.log.tag.C2K_RIL-DATA=I
+persist.log.tag.RIL-SIM=I
+persist.log.tag.RILJ=D
+persist.ril.radio.nw.log=1
+
+# ril && telephony && volte
 rild.libpath=mtk-ril.so
 rild.libargs=-d /dev/ttyC0
+ril.specific.sm_cause=0
+ril.external.md=0
+ril.first.md=1
+ril.flightmode.poweroffMD=0
+ril.telephony.mode=0
+ril.read.imsi=1
+ril.radiooff.poweroffMD=0
+ro.mtk_rild_read_imsi=1
+ril.data.need.follow.on=1
+ro.telephony.sim.count=2
+ro.telephony.default_network=9
+ro.mtk_lte_support=1
+persist.mtk_volte_support=0
+persist.mtk.volte.enable=0
+persist.mtk_vilte_support=0
+ro.mtk_vilte_ut_support=0
+ro.boot.opt_c2k_lte_mode=0
+ro.boot.opt_lte_support=1
 
-# Wifi
+# WLAN
 wifi.interface=wlan0
+ro.mediatek.wlan.wsc=1
+ro.mediatek.wlan.p2p=1
+mediatek.wlan.ctia=0
+wifi.tethering.interface=ap0
 wifi.direct.interface=p2p0
+mediatek.wlan.chip=CONSYS_MT6755
+mediatek.wlan.module.postfix=_consys_mt6755
+# Default Wi-Fi country code
+ro.boot.wificountrycode=US
+persist.mtk_wfc_support=0
+persist.mtk.wfc.enable=0
+ro.mtk_wfd_support=1
+# Wi-Fi Display Source UIBC
+media.wfd.source.uibc-enabled=1
+wfd.dummy.enable=1
+wfd.iframesize.level=0
+ro.mtk_dhcpv6c_wifi=1
+ro.mtk_wifi_mcc_support=1
+ro.mtk_wlan_support=1
 
-# OpenGL
+# OpenGLES
 ro.opengles.version=196610
-ro.kernel.qemu.gles=0
 
 # Dalvik
 dalvik.vm.heapgrowthlimit=256m
 dalvik.vm.heapsize=512m
 
-# Audio
+# USB MTP WHQL
+ro.sys.usb.mtp.whql.enable=0
+
+# Power off opt in IPO
+sys.ipo.pwrdncap=2
+
+# USB BICR function
+ro.sys.usb.bicr=no
+
+# audio
 ro.camera.sound.forced=0
 ro.audio.silent=0
-persist.af.audio_patch_fm=1
 
-# enable soft keys
-qemu.hw.mainkeys=1
+# audio parameter version
+persist.audio.gain.version=N_25.00_20170726_1007
+persist.audio.clear_audio_state=0
 
-# Disable dirty region for Mali
-debug.hwui.render_dirty_regions=false
+# zygote
+ro.zygote.preload.enable=0
 
-# lcd density
+# temporary enables NAV bar (soft keys)
+qemu.hw.mainkeys=0
+
+# Kernel ZIO
+ro.kernel.zio=38,108,105,16
+
+# density
 ro.sf.lcd_density=320
 
-# RIL
-ro.telephony.sim.count=2
-persist.radio.multisim.config=dsds
-ril.external.md=0
-ril.telephony.mode=0
+# performance
+ro.mtk_perf_simple_start_win=1
+ro.mtk_perf_fast_start_win=1
+ro.mtk_perf_response_time=1
+
+# MAL
+persist.mal.mode=0
+
+# nfc
+#S : JackBB 20161013 - Update system.prop file for customer NFC feature requirement
+ro.nfc.se.sim.enable=true
+ro.nfc.se.smx.enable=false
+ro.nfc.icon.enable=false
+ro.nfc.on.default=true
+#E : ackBB 20161013 - Update system.prop file for customer NFC feature requirement
+#S : JackBB 20161026 - Update system.prop file for NFC FW Version
+persist.nfc.cap.fwver=80126
+persist.nfc.cap.hwver=0001
+#E : JackBB 20161026 - Update system.prop file for NFC FW Version
+ro.nfc.port=I2C
+mtknfc.status.type=unknow
+
+# other
+ro.carrier=unknown
+ro.mediatek.chip_ver=S01
+ro.mediatek.platform=MT6755
+persist.radio.default.sim=0
+bgw.current3gband=0
+ro.mtk_cam_lomo_support=1
+ro.sf.hwrotation=0
 persist.radio.fd.counter=7
 persist.radio.fd.off.counter=5
 persist.radio.fd.r8.counter=7
 persist.radio.fd.off.r8.counter=5
-ro.mtk_sim_hot_swap=1
-ro.mtk_world_phone=1
-ro.mtk_md_world_mode_support=1
-ro.mtk_lte_support=1
-ro.mtk_rild_read_imsi=1
+drm.service.enabled=true
+fmradio.driver.enable=1
+mtk.eccci.c2k=enabled
 ro.mtk_protocol1_rat_config=Lf/W/G
-persist.radio.mtk_ps2_rat=W/G
-persist.radio.mtk_ps3_rat=G
-ro.boot.opt_using_default=1
-ro.boot.opt_md1_support=5
-ro.boot.opt_c2k_lte_mode=0
-ro.boot.opt_ps1_rat=Lf/W/G
-ro.boot.opt_lte_support=1
-ro.boot.opt_eccci_c2k=1
-
-# other things
-ro.mediatek.chip_ver=S01
 ro.mediatek.version.branch=alps-mp-n0.mp103.tc9sp
 ro.mediatek.version.release=alps-mp-n0.mp103.tc9sp-V2.43_cci55.64.sm10.n_TMP1
-ro.mediatek.platform=MT6755
-bgw.current3gband=0
-ro.sf.hwrotation=0
-persist.mtk.wcn.combo.chipid=-1
-drm.service.enabled=true
-wfd.dummy.enable=1
-keyguard.no_require_sim=true
-camera.disable_zsl_mode=1
-persist.debug.wfd.enable=1
-service.adb.root=1
-persist.sys.root_access=0
-ro.sys.usb.storage.type=mtp,adb
+ro.mediatek.version.sdk=4
+ro.product.first_api_level=23
+ro.num_md_protocol=2
+persist.radio.multisim.config=dsds
+ro.mtk_besloudness_support=1
+ro.mtk_bt_support=1
+ro.mtk_wappush_support=1
+ro.mtk_agps_app=1
+ro.mtk_audio_tuning_tool_ver=V2.2
+ro.mtk_matv_analog_support=1
+ro.mtk_ipo_support=1
+ro.mtk_gps_support=1
+ro.mtk_omacp_support=1
+ro.mtk_search_db_support=1
+ro.mtk_dialer_search_support=1
+ro.have_aacencode_feature=1
+ro.mtk_fd_support=1
+persist.data.cc33.support=0
+ro.mtk_eap_sim_aka=1
+ro.mtk_wmv_playback_support=1
+ro.mtk_send_rr_support=1
+ro.mtk_emmc_support=1
+ro.mtk_fm_50khz_support=1
+ro.mtk_tetheringipv6_support=1
+ro.mtk_shared_sdcard=1
+ro.mtk_enable_md1=1
+ro.mtk_afw_support=1
+ro.mtk_aal_support=1
+ro.mtk_pq_support=2
+ro.mtk_pq_color_mode=2
+ro.mtk_sim_hot_swap=1
+ro.mtk_bip_scws=1
+ro.mtk_world_phone_policy=0
+ro.mtk_md_world_mode_support=1
+ro.mtk_perfservice_support=1
+ro.mtk_sim_hot_swap_common_slot=1
+ro.sim_refresh_reset_by_modem=1
+ro.mtk_external_sim_only_slots=0
+ro.mtk_passpoint_r2_support=1
+ro.sim_me_lock_mode=0
+ro.mtk_dual_mic_support=1
+ro.mtk_is_tablet=0
+persist.mtk_nlp_switch_support=1
 persist.mtk_ims_support=0
+ro.mtk_multiple_ims_support=1
+ro.sdcrypt.supported=true
+ro.mtk_trustonic_tee_support=1
+persist.mtk.wcn.combo.chipid=-1
+persist.mtk.wcn.patch.version=-1
+persist.mtk.wcn.dynamic.dump=0
+service.wcn.driver.ready=no
+service.wcn.coredump.mode=0
+persist.mtk.connsys.poweron.ctl=0
 persist.mtk_epdg_support=0
+ro.com.android.mobiledata=true
 persist.radio.mobile.data=0,0
+persist.meta.dumpdata=0
+ro.mtk_deinterlace_support=1
+ro.mtk_md_sbp_custom_value=0
+ro.mtk_modem_monitor_support=1
+persist.radio.mtk_ps2_rat=W/G
+persist.radio.mtk_ps3_rat=G
+ro.boot.opt_eccci_c2k=1
+ro.boot.opt_using_default=1
+mtk.vdec.waitkeyframeforplay=1
+ro.sys.sdcardfs=1
+ro.media.maxmem=500000000
+ro.com.android.prov_mobiledata=false
+net.bt.name=Android
