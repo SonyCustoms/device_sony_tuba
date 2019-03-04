@@ -1,0 +1,14 @@
+#
+# Copyright (C) 2016 Sony Mobile Communications Inc.
+# All rights, including trade secret rights, reserved.
+#
+
+#
+# init.sony-trimarea.rc
+#
+
+import init.sony-trimarea-tad.rc
+
+# For all platforms ta_service
+import init.sony-trimarea-ta-service.rc
+

@@ -26,4 +26,7 @@ $(call add-rootdir-targets, \
     init.connectivity.rc \
     init.rilproxy.rc \
     init.volte.rc \
+    init.sony-trimarea-ta-service.rc \
+    init.sony-trimarea-tad.rc \
+    init.sony-trimarea.rc \
     init.mal.rc)

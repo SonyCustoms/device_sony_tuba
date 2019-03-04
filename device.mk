@@ -134,6 +134,9 @@ PRODUCT_PACKAGES += \
     init.volte.rc \
     init.project.rc \
     init.recovery.mt6755.rc \
+    init.sony-trimarea-ta-service.rc \
+    init.sony-trimarea-tad.rc \
+    init.sony-trimarea.rc \
     init.mal.rc
 
 PRODUCT_COPY_FILES += \
