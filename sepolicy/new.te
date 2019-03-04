@@ -1,0 +1,329 @@
+##
+type gmadfs_exec , exec_type, file_type;
+type gmadfs ,domain;
+init_daemon_domain(gmadfs)
+##
+##
+type gmadfs306_exec , exec_type, file_type;
+type gmadfs306 ,domain;
+init_daemon_domain(gmadfs306)
+##
+##
+type gmadfs306_sm21_sp1_exec , exec_type, file_type;
+type gmadfs306_sm21_sp1 ,domain;
+init_daemon_domain(gmadfs306_sm21_sp1)
+##
+##
+type gmadfs306_sm21_sp2_exec , exec_type, file_type;
+type gmadfs306_sm21_sp2 ,domain;
+init_daemon_domain(gmadfs306_sm21_sp2)
+##
+##
+type ipsec_mon_exec , exec_type, file_type;
+type ipsec_mon ,domain;
+init_daemon_domain(ipsec_mon)
+##
+##
+type usp_service_exec , exec_type, file_type;
+type usp_service ,domain;
+init_daemon_domain(usp_service)
+##
+##
+type sysenv_daemon_exec , exec_type, file_type;
+type sysenv_daemon ,domain;
+init_daemon_domain(sysenv_daemon)
+##
+##
+type thermalindicator_exec , exec_type, file_type;
+type thermalindicator ,domain;
+init_daemon_domain(thermalindicator)
+##
+##
+type embms_library_file, file_type, data_file_type;
+##
+##
+type idd_data_file , file_type, data_file_type;
+##
+##
+type scd_exec, exec_type, file_type;
+type apfd_exec, exec_type, file_type;
+type secd_exec, exec_type, file_type;
+type idd_exec, exec_type, file_type;
+type xssm_exec, exec_type, file_type;
+type wvkbd_exec, exec_type, file_type;
+type moddir_exec, exec_type, file_type;
+type klogcat_exec, exec_type, file_type;
+type cta_exec, exec_type, file_type;
+type mpobserver_exec, exec_type, file_type;
+type tpm-service_exec, exec_type, file_type;
+type scdnotifier_exec, exec_type, file_type;
+type startupprober_exec, exec_type, file_type;
+type crashmonitorns_exec, exec_type, file_type;
+type display_color_calib_exec, exec_type, file_type; 
+##
+##
+type DW9790A_device , exec_type, dev_type;
+type DW9790A_exec , exec_type, file_type;
+type DW9790A ,domain;
+init_daemon_domain(DW9790A)
+##
+##
+type klog_data_file , exec_type, file_type;
+type idd_fsck_file , exec_type, file_type;
+type idd_data_exec , exec_type, file_type;
+type idd_output_file , exec_type, file_type;
+type idd_socket_file , exec_type, file_type;
+type fuelgauged_file , exec_type, file_type;
+type scd_data_file , exec_type, file_type;
+##
+##
+type qns_file , exec_type, file_type;
+type qns_exec , exec_type, file_type;
+type qns ,domain;
+init_daemon_domain(qns)
+##
+##
+type idd_rca_file , exec_type, file_type;
+type idd_rca_exec , exec_type, file_type;
+type idd_rca ,domain;
+init_daemon_domain(idd_rca)
+##
+#============= audioserver ==============
+allow audioserver sysfs_ccci:dir search;
+allow audioserver sysfs_ccci:file { open read };
+
+#============= boot_logo_updater ==============
+allow boot_logo_updater rootfs:file { getattr open read };
+allow boot_logo_updater sysfs:file { open read };
+
+#============= bootanim ==============
+allow bootanim debugfs_binder:dir search;
+
+#============= ccci_fsd ==============
+allow ccci_fsd mtk_md_prop:file { getattr open read };
+
+#============= emdlogger ==============
+allow emdlogger sysfs_ccci:dir search;
+allow emdlogger sysfs_ccci:file { open read };
+
+#============= fsck ==============
+allow fsck appslog_block_device:blk_file { getattr ioctl open read write };
+allow fsck diag_block_device:blk_file getattr;
+allow fsck persist_block_device:blk_file { ioctl open };
+
+#============= gsm0710muxd ==============
+allow gsm0710muxd sysfs_ccci:dir search;
+allow gsm0710muxd sysfs_ccci:file { open read };
+
+#============= healthd ==============
+allow healthd debugfs_binder:dir search;
+
+#============= init ==============
+allow init klog_data_file:dir { create setattr };
+allow init qns_sysfs:dir write;
+
+#============= ipsec_mon ==============
+allow ipsec_mon self:netlink_xfrm_socket create;
+allow ipsec_mon system_prop:property_service set;
+
+#============= mediaserver ==============
+allow mediaserver sysfs_devinfo:file { open read };
+
+#============= msensord ==============
+allow msensord ctl_default_prop:property_service set;
+
+#============= mtkrild ==============
+allow mtkrild debugfs_binder:dir search;
+allow mtkrild gsm0710muxd_prop:file { getattr open read };
+
+#============= netd ==============
+allow netd debugfs_binder:dir search;
+
+#============= nvram_agent_binder ==============
+allow nvram_agent_binder debugfs_binder:dir search;
+
+#============= nvram_daemon ==============
+allow nvram_daemon default_prop:property_service set;
+
+#============= pq ==============
+allow pq debug_prop:property_service set;
+
+#============= program_binary ==============
+allow program_binary debugfs_binder:dir search;
+allow program_binary proc:file { ioctl open read };
+allow program_binary program_binary_prop:file { getattr open read };
+allow program_binary program_binary_service:service_manager find;
+allow program_binary self:binder call;
+
+#============= rilproxy ==============
+allow rilproxy debugfs_binder:dir search;
+allow rilproxy proc:file open;
+
+#============= servicemanager ==============
+allow servicemanager debugfs_binder:dir search;
+
+#============= stp_dump3 ==============
+allow stp_dump3 mnt_user_file:dir search;
+allow stp_dump3 storage_file:lnk_file read;
+allow stp_dump3 tmpfs:dir search;
+
+#============= surfaceflinger ==============
+allow surfaceflinger debugfs_binder:dir search;
+
+#============= sysenv_daemon ==============
+allow sysenv_daemon para_block_device:blk_file { open read };
+allow sysenv_daemon proc_lk_env:file { ioctl open read write };
+allow sysenv_daemon self:netlink_socket { bind create read };
+allow sysenv_daemon sysfs:file { open read };
+
+#============= system_server ==============
+allow system_server debugfs_binder:dir search;
+
+#============= vtservice ==============
+allow vtservice debugfs_binder:dir search;
+allow vtservice system_data_file:dir { add_name write };
+allow vtservice system_data_file:sock_file create;
+
+#============= wmt_loader ==============
+allow wmt_loader init:unix_stream_socket connectto;
+allow wmt_loader proc:file setattr;
+allow wmt_loader property_socket:sock_file write;
+allow wmt_loader self:capability { chown dac_override };
+allow wmt_loader wmt_prop:file { getattr open read };
+allow wmt_loader wmt_prop:property_service set;
+allow wmt_loader wmtdetect_device:chr_file { ioctl open read write };
+
+#============= aal ==============
+allow aal debugfs_binder:dir search;
+
+#============= aee_core_forwarder ==============
+allow aee_core_forwarder kernel:fd use;
+allow aee_core_forwarder persist_aee_prop:file { getattr open read };
+allow aee_core_forwarder rootfs:file { getattr open read };
+allow aee_core_forwarder self:capability sys_ptrace;
+
+#============= audioserver ==============
+allow audioserver debugfs_binder:dir search;
+
+#============= drmserver ==============
+allow drmserver debugfs_binder:dir search;
+
+#============= fsck ==============
+allow fsck diag_block_device:blk_file { ioctl open read write };
+
+#============= gatekeeperd ==============
+allow gatekeeperd debugfs_binder:dir search;
+
+#============= ged_srv ==============
+allow ged_srv debugfs_binder:dir search;
+allow ged_srv debugfs_ged:dir search;
+allow ged_srv debugfs_ged:file { getattr open write };
+allow ged_srv gas_srv_service:service_manager add;
+allow ged_srv proc:file { open read };
+allow ged_srv sysfs:file { open read };
+
+#============= init ==============
+allow init mnld_data_file:sock_file write;
+allow init qns_file:dir { create getattr setattr write };
+
+#============= ipsec_mon ==============
+allow ipsec_mon init:unix_stream_socket connectto;
+allow ipsec_mon property_socket:sock_file write;
+allow ipsec_mon self:capability net_admin;
+allow ipsec_mon self:netlink_xfrm_socket { bind nlmsg_read read write };
+
+#============= keystore ==============
+allow keystore debugfs_binder:dir search;
+
+#============= md_monitor ==============
+allow md_monitor persist_mtklog_prop:file { getattr open read };
+allow md_monitor rootfs:file { getattr open read };
+allow md_monitor sysfs:file { open read };
+allow md_monitor sysfs_ccci:dir search;
+allow md_monitor sysfs_ccci:file { open read };
+allow md_monitor system_file:dir { open read };
+
+#============= mediacodec ==============
+allow mediacodec debugfs_binder:dir search;
+allow mediacodec sysfs_devinfo:file { open read };
+
+#============= mediaextractor ==============
+allow mediaextractor debugfs_binder:dir search;
+
+#============= mediaserver ==============
+allow mediaserver debug_prop:property_service set;
+allow mediaserver default_prop:property_service set;
+allow mediaserver system_prop:property_service set;
+
+#============= mobile_log_d ==============
+allow mobile_log_d sysfs_devinfo:file { open read };
+
+#============= nfc ==============
+allow nfc debugfs_binder:dir search;
+
+#============= nvram_daemon ==============
+allow nvram_daemon proc:file { open read };
+
+#============= platform_app ==============
+allow platform_app debugfs_binder:dir search;
+
+#============= pq ==============
+allow pq debugfs_binder:dir search;
+
+#============= priv_app ==============
+allow priv_app debugfs_binder:dir search;
+
+#============= program_binary ==============
+allow program_binary system_file:file execute_no_trans;
+
+#============= radio ==============
+allow radio debugfs_binder:dir search;
+
+#============= shared_relro ==============
+allow shared_relro debugfs_binder:dir search;
+
+#============= stp_dump3 ==============
+allow stp_dump3 fuse:dir { add_name open read remove_name search write };
+allow stp_dump3 fuse:file { append create getattr open read unlink };
+allow stp_dump3 mnt_user_file:lnk_file read;
+
+#============= system_app ==============
+allow system_app debugfs_binder:dir search;
+
+#============= system_server ==============
+allow system_server debugfs_wakeup_sources:file { getattr open read };
+
+#============= untrusted_app ==============
+allow untrusted_app debugfs_binder:dir search;
+
+#============= vtservice ==============
+allow vtservice system_data_file:dir remove_name;
+allow vtservice system_data_file:sock_file unlink;
+
+#============= yamaha537 ==============
+allow yamaha537 system_data_file:file { getattr open read write };
+
+#============= aee_core_forwarder ==============
+allow aee_core_forwarder tmpfs:dir search;
+
+#============= atci_service ==============
+allow atci_service debugfs_binder:dir search;
+
+#============= ccci_mdinit ==============
+allow ccci_mdinit sysfs_devinfo:file { open read };
+
+#============= ext_csd_file ==============
+allow ext_csd_file debugfs:filesystem associate;
+
+#============= mediadrmserver ==============
+allow mediadrmserver debugfs_binder:dir search;
+
+#============= mediaserver ==============
+allow mediaserver debugfs_binder:dir search;
+
+#============= program_binary ==============
+allow program_binary system_file:dir { open read };
+
+#============= suspend_stats_file ==============
+allow suspend_stats_file debugfs:filesystem associate;
+
