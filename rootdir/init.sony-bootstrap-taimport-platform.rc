@@ -1,0 +1,18 @@
+#
+# Copyright (C) 2016 Sony Mobile Communications Inc.
+# All rights, including trade secret rights, reserved.
+#
+
+#
+# init.sony-bootstrap-taimport-platform.rc
+#
+
+on post-fs-data
+    start taimport
+
+service taimport /system/bin/taimport platform
+    user root
+    oneshot
+    seclabel u:r:taimport:s0
+    disabled
+

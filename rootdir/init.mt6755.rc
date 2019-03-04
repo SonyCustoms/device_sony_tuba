@@ -1,4 +1,5 @@
 import init.sony-trimarea.rc
+import init.sony-bootstrap.rc
 import init.connectivity.rc
 import init.rilproxy.rc
 import init.volte.rc

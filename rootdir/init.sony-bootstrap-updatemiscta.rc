@@ -1,0 +1,16 @@
+#
+# Copyright (C) 2014 Sony Mobile Communications Inc.
+# All rights, including trade secret rights, reserved.
+#
+
+#
+# init.sony-bootstrap-updatemiscta.rc
+#
+
+service updatemiscta /system/bin/updatemiscta
+    class main
+    user updatemiscta
+    group trimarea
+    seclabel u:r:updatemiscta:s0
+    oneshot
+

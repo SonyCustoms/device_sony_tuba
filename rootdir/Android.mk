@@ -29,4 +29,8 @@ $(call add-rootdir-targets, \
     init.sony-trimarea-ta-service.rc \
     init.sony-trimarea-tad.rc \
     init.sony-trimarea.rc \
+    init.sony-bootstrap.rc \
+    init.sony-bootstrap-taimport.rc \
+    init.sony-bootstrap-taimport-platform.rc \
+    init.sony-bootstrap-updatemiscta.rc \
     init.mal.rc)

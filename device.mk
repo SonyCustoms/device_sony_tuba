@@ -108,7 +108,7 @@ PRODUCT_PACKAGES += \
     YGPS
 
 # Graphics
-MTK_GPU_VERSION := mali midgard r7p0
+MTK_GPU_VERSION := mali midgard r12p1
 
 # IO Scheduler
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -137,11 +137,18 @@ PRODUCT_PACKAGES += \
     init.sony-trimarea-ta-service.rc \
     init.sony-trimarea-tad.rc \
     init.sony-trimarea.rc \
+    init.sony-bootstrap.rc \
+    init.sony-bootstrap-taimport.rc \
+    init.sony-bootstrap-taimport-platform.rc \
+    init.sony-bootstrap-updatemiscta.rc \
     init.mal.rc
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/etc/twrp.fstab:recovery/root/etc/twrp.fstab \
-    $(LOCAL_PATH)/recovery/sbin/fuelgauged_static:recovery/root/sbin/fuelgauged_static
+    $(LOCAL_PATH)/recovery/sbin/fuelgauged_static:recovery/root/sbin/fuelgauged_static \
+    $(LOCAL_PATH)/recovery/sbin/mr:root/sbin/mr \
+    $(LOCAL_PATH)/recovery/sbin/tad_static:root/sbin/tad_static \
+    $(LOCAL_PATH)/recovery/sbin/wait4tad_static:root/sbin/wait4tad_static
 
 # ADB Debugging
 ADDITIONAL_DEFAULT_PROPERTIES += \
