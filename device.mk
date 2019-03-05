@@ -116,39 +116,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 
 # Root
-PRODUCT_PACKAGES += \
-    fstab.mt6755 \
-    init.modem.rc \
-    init.usb.configfs.rc \
-    init.usb.rc \
-    init.mt6755.rc \
-    init.mt6755.usb.rc \
-    ueventd.mt6755.rc \
-    factory_init.project.rc \
-    factory_init.rc \
-    meta_init.connectivity.rc \
-    meta_init.modem.rc \
-    meta_init.project.rc \
-    init.connectivity.rc \
-    init.rilproxy.rc \
-    init.volte.rc \
-    init.project.rc \
-    init.recovery.mt6755.rc \
-    init.sony-trimarea-ta-service.rc \
-    init.sony-trimarea-tad.rc \
-    init.sony-trimarea.rc \
-    init.sony-bootstrap.rc \
-    init.sony-bootstrap-taimport.rc \
-    init.sony-bootstrap-taimport-platform.rc \
-    init.sony-bootstrap-updatemiscta.rc \
-    init.mal.rc
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/etc/twrp.fstab:recovery/root/etc/twrp.fstab \
     $(LOCAL_PATH)/recovery/sbin/fuelgauged_static:recovery/root/sbin/fuelgauged_static \
-    $(LOCAL_PATH)/recovery/sbin/mr:root/sbin/mr \
-    $(LOCAL_PATH)/recovery/sbin/tad_static:root/sbin/tad_static \
-    $(LOCAL_PATH)/recovery/sbin/wait4tad_static:root/sbin/wait4tad_static
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/rootdir,root)
 
 # ADB Debugging
 ADDITIONAL_DEFAULT_PROPERTIES += \
