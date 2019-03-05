@@ -29,7 +29,11 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	ro.debuggable=1 \
 	persist.service.acm.enable=0 \
 	camera.disable_zsl_mode=1 \
-    persist.sys.usb.config=mtp,adb
+    persist.sys.usb.config=mtp,adb \
+    ro.semc.version.sw=1300-9504 \
+    ro.semc.version.sw_revision=33.3.A.0.131 \
+    ro.semc.version.sw_variant=GLOBALDS-LTE1D \
+    ro.semc.version.sw_type=user
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay

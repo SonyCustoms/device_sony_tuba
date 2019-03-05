@@ -1,3 +1,14 @@
+#semc
+################# Updating of the SW Version #################
+ro.semc.version.fs_revision=33.3.A.0.131
+##### Values from product package metadata #####
+ro.semc.product.model=F3111
+ro.semc.ms_type_id=PM-0920-BV
+ro.semc.version.fs=GENERIC
+ro.semc.product.name=Xperia XA
+ro.semc.product.device=F31
+ro.product.model=F3111
+
 # logging
 service.adb.root=1
 persist.sys.root_access=0

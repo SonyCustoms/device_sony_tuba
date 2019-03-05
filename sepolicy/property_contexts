@@ -249,7 +249,7 @@ mtk_em_bt_sspdebug. u:object_r:mtk_em_bt_sspdebug_prop:s0
 mtk_em_ims.         u:object_r:mtk_em_ims_prop:s0
 mtk_em.             u:object_r:mtk_em_prop:s0
 mtk_em_ril_apnchange.   u:object_r:mtk_em_ril_apnchange_prop:s0
-semc_version_cust_active.   u:object_r:semc_version_cust_active_prop:s0
+semc.version.                u:object_r:semc_version_prop:s0
 usp.                        u:object_r:usp_prop:s0
 service_nvram_init.         u:object_r:service_nvram_init_prop:s0
 usp_srv.                    u:object_r:usp_srv_prop:s0

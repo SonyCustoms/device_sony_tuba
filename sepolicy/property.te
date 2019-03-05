@@ -2,7 +2,7 @@
 # MTK Policy Rule
 # ==============================================
 type mtk_default_prop, property_type;
-
+type semc_version_prop, property_type;
 # Date: W14.32
 # Operation: Migration
 # Purpose: don't allow to use default_prop

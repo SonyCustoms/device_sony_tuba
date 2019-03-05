@@ -8,3 +8,5 @@ allow updatemiscta property_socket:sock_file write;
 allow updatemiscta self:capability dac_override;
 allow updatemiscta tad:unix_stream_socket connectto;
 allow updatemiscta tad_socket:sock_file write;
+# Allow updatemiscta to get semc_version_prop
+set_prop(updatemiscta, semc_version_prop)
