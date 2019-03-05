@@ -38,14 +38,14 @@ on post-fs-data
 # Start idd native service
 service iddd /system/bin/iddd
     class core
-    user idd
-    group idd log inet trimarea
+    user root
+    group root
 
 service startup-prober /system/bin/startup-prober
     user root
     oneshot
     disabled
-    group trimarea drmrpc system credmgr_client
+    group root
 
 on property:dev.bootcomplete=1
     start startup-prober
