@@ -12,7 +12,8 @@ on post-fs-data
 
 # Trim Area CCCI service
 service ta_ccci_service /system/bin/ta_ccci_service
-    user ta_qmi
-    group ta_qmi radio trimarea system root net_raw
+    user root
+    group radio trimarea system root net_raw
+    class core
     seclabel u:r:ta_ccci_service:s0
     disabled
