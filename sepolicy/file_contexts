@@ -518,7 +518,7 @@
 /sys/devices/platform/gsensor/driver(/.*)?	u:object_r:sysfs_gsensor_file:s0
 /sys/devices/platform/msensor/driver(/.*)?	u:object_r:sysfs_msensor_file:s0
 /sys/class/invensense_daemon_class/invensense_daemon_device(/.*)?	u:object_r:gyroscope_mpud6050_file:s0
-
+/system/bin/ta_ccci_service	u:object_r:ta_ccci_service_exec:s0
 /rca	u:object_r:idd_rca_dir:s0
 /idd	u:object_r:idd_root_dir:s0
 /dev/otp	u:object_r:otp_device:s0
