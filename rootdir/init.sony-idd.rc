@@ -1,0 +1,51 @@
+#
+# Copyright (C) 2016 Sony Mobile Communications Inc.
+# All rights, including trade secret rights, reserved.
+#
+
+#
+# init.sony-idd.rc
+#
+
+import init.sony-idd-variant.rc
+
+on early-fs
+    # SONY: creat mount point for idd and rca
+    mkdir /idd 0751 idd idd
+    mkdir /rca 0750 idd idd
+
+on fs
+    # SONY: setup idd and rca partition
+    chown idd idd /idd
+    chmod 0751 /idd
+    symlink /idd /mnt/idd
+    chown idd idd /rca
+    chmod 0750 /rca
+    symlink /rca /mnt/rca
+
+on post-fs-data
+    mkdir /mnt/idd/lost+found 0770 root root
+    mkdir /mnt/idd/output 0755 idd idd
+    mkdir /mnt/idd/socket 0711 idd idd
+    mkdir /mnt/idd/private 0700 idd idd
+    mkdir /mnt/idd/input 0755 idd idd
+    mkdir /mnt/idd/startup-prober 0700 root root
+    restorecon_recursive /mnt/idd
+    mkdir /mnt/rca/plugins 0750 idd idd
+    mkdir /mnt/rca/startup-logger 0700 root root
+    restorecon_recursive /mnt/rca
+
+# Start idd native service
+service iddd /system/bin/iddd
+    class core
+    user idd
+    group idd log inet trimarea
+
+service startup-prober /system/bin/startup-prober
+    user root
+    oneshot
+    disabled
+    group trimarea drmrpc system credmgr_client
+
+on property:dev.bootcomplete=1
+    start startup-prober
