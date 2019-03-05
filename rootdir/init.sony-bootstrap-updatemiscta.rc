@@ -8,9 +8,9 @@
 #
 
 service updatemiscta /system/bin/updatemiscta
-    class main
-    user updatemiscta
-    group trimarea
+    class core
+    user root
+    group root
     seclabel u:r:updatemiscta:s0
     oneshot
 
