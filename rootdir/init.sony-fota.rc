@@ -1,0 +1,18 @@
+on post-fs
+
+    # Make sure that recovery/fota exists with the correct permissions
+    mkdir /cache/recovery/fota 0770 system cache
+    restorecon /cache/recovery/fota
+
+on post-fs-data
+
+    chmod 0755 /sbin/ua-data-mounter
+    exec u:r:uadatamounter:s0 -- /sbin/ua-data-mounter
+    mkdir /data/misc 0771 system system
+    mkdir /data/misc/mcRegistry 0770 system system
+    exec u:r:fota-ua:s0 -- /sbin/fota-ua c
+
+
+#status files from cache partition to internal sdcard at post-fs-data
+    exec u:r:fota-init:s0 -- /system/bin/sh /system/etc/post-fs-data-fota.sh
+
