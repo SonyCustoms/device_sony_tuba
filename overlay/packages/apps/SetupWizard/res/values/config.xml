@@ -17,5 +17,5 @@
 <resources>
     <!-- The type of sim image to display.
          0=default sim image, 1=sim on side, 2=sim on back-->
-    <integer name="sim_image_type">1</integer>
+    <integer name="sim_image_type">2</integer>
 </resources>
