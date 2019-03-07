@@ -3,6 +3,30 @@
 # ==============================================
 type mtk_default_prop, property_type;
 type semc_version_prop, property_type;
+type ftrace_log_prop, property_type;
+type logmuch_prop, property_type;
+type mtk_net_ipv6_prop, property_type;
+type ctl_gmadfs_prop, property_type;
+type ctl_gmadfs306_prop, property_type;
+type ctl_gmadfs306_sm21_sp1_prop, property_type;
+type ctl_gmadfs306_sm21_sp2_prop, property_type;
+type ctl_yamaha537_prop, property_type;
+type gmadfs_en_prop, property_type;
+type usb_otg_switch, property_type;
+type persist_mtk_main_attach, property_type;
+type xssm_lcd_fpks_prop, property_type;
+type tareset_notfirstboot_prop, property_type;
+type sony_colorid_prop, property_type;
+type device_color_prof_prop, property_type;
+type sony_serialno_prop, property_type;
+type usb_eng_prop, property_type;
+type usb_diag_mode_prop, property_type;
+type usb_config_prop, property_type;
+type usb_adb_enable_prop, property_type;
+type adb_secure_prop, property_type;
+type persist_sys_semc_mtbf_state_prop, property_type;
+type sony_mtk_widevine_prov_prop, property_type;
+
 # Date: W14.32
 # Operation: Migration
 # Purpose: don't allow to use default_prop

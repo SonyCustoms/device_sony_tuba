@@ -31,3 +31,11 @@ type mtk_rns_service, app_api_service, system_server_service, service_manager_ty
 type gas_srv_service, service_manager_type;
 type mtk_data_shaping_service, app_api_service, system_server_service, service_manager_type;
 type mtk_multiwindow_service, app_api_service, system_server_service, service_manager_type;
+type dns_listener_service, service_manager_type;
+type display_color_calib_service, service_manager_type;
+type mtk_epdg_service, service_manager_type;
+type mtk_usp_service, service_manager_type;
+type mtk_running_booster_service, service_manager_type;
+type mtk_test_ampolicymaker_service, service_manager_type;
+type mtk_crossmount_service, service_manager_type;
+type vie_command_service, service_manager_type;
