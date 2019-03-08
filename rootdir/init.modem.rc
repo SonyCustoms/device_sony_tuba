@@ -35,6 +35,10 @@ on post-fs-data
     restorecon /data/ccci_cfg
     restorecon_recursive /protect_f
     restorecon_recursive /protect_s
+
+    # ignore permission check
+    write /data/ccci_cfg/md_new_ver.1 "flag"
+    chmod 0660 /data/ccci_cfg/md_new_ver.1
     
     # Encrypt phone function
     setprop vold.post_fs_data_done 1
@@ -62,10 +66,10 @@ service muxreport-daemon /vendor/bin/muxreport
 
 service ril-daemon-mtk /vendor/bin/mtkrild
     class core
-    socket rild stream 660 root radio
-    socket rild2 stream 660 root radio
-    socket rild3 stream 660 root radio
-    socket rild4 stream 660 root radio
+    socket mrild stream 660 root radio
+    socket mrild2 stream 660 root radio
+    socket mrild3 stream 660 root radio
+    socket mrild4 stream 660 root radio
     socket rild-ims stream 660 root radio
     socket rild-debug stream 660 radio system
     socket rild-oem stream 660 radio system
