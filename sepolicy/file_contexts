@@ -121,7 +121,6 @@
 /(system\/vendor|vendor)/bin/program_binary_service	u:object_r:program_binary_exec:s0
 /(system\/vendor|vendor)/bin/hotknot_native_service	u:object_r:hotknot_native_exec:s0
 /system/bin/taimport	u:object_r:taimport_exec:s0
-/system/bin/updatemiscta	u:object_r:updatemiscta_exec:s0
 /idd(/.*)?	u:object_r:idd_data_file:s0
 /qns(/.*)?	u:object_r:qns_file:s0
 /rca(/.*)?	u:object_r:idd_rca_file:s0
@@ -654,3 +653,7 @@
 /sys/devices/platform/leds-mt65xx/leds/green/blink_brightness	u:object_r:sysfs_leds:s0
 /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness	u:object_r:sysfs_leds:s0
 /sys/devices/platform/sony_ssm/set_request_next_suspend_prepare_notification	u:object_r:sysfs_sony_ssm:s0
+/dev/block/mmcblk0p1             u:object_r:trim_area_partition_device:s0
+/system/bin/tad_static              u:object_r:tad_exec:s0
+/system/bin/updatemiscta            u:object_r:updatemiscta_exec:s0
+

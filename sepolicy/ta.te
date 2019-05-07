@@ -1,0 +1,54 @@
+type tad, domain;
+type tad_exec, exec_type, file_type;
+type ta_ccci_service, domain;
+type ta_ccci_service_exec, exec_type, file_type;
+type updatemiscta, domain;
+type updatemiscta_exec, exec_type, file_type;
+type taimport, domain;
+type taimport_exec, exec_type, file_type;
+type ta_data_file, data_file_type; 
+
+# Started by init
+init_daemon_domain(taimport)
+init_daemon_domain(tad)
+init_daemon_domain(ta_ccci_service)
+init_daemon_domain(updatemiscta)
+
+# Read /proc/stat
+allow tad proc:file r_file_perms;
+
+# Allow tad to work its magic
+allow tad block_device:dir search;
+allow tad block_device:blk_file ioctl;
+allow tad tad_block_device:blk_file rw_file_perms;
+allow ta_ccci_service diag_device:chr_file { read open write };
+allow ta_ccci_service self:capability { dac_override fsetid };
+allow ta_ccci_service self:socket create_socket_perms;
+
+# Wakelocks
+wakelock_use(ta_ccci_service)
+
+# Connect to tad and qmuxd
+unix_socket_connect(ta_ccci_service, tad, tad)
+qmux_socket(ta_ccci_service)
+
+# Access to smem_log
+allow ta_ccci_service smem_log_device:chr_file rw_file_perms;
+allow updatemiscta self:capability dac_override;
+set_prop(updatemiscta, updatemiscta_prop)
+
+# Connect to tad
+type_transition updatemiscta socket_device:sock_file tad_socket;
+unix_socket_connect(updatemiscta, tad, tad)
+
+# Connect to /dev/socket/tad
+unix_socket_connect(taimport, tad, tad)
+
+allow taimport self:capability setgid;
+
+# Write to /data/etc/*
+allow taimport ta_data_file:dir rw_dir_perms;
+type_transition taimport ta_data_file:file wifi_data_file;
+type_transition taimport ta_data_file:file bluetooth_data_file "bluetooth_bdaddr";
+allow taimport wifi_data_file:file create_file_perms;
+allow taimport bluetooth_data_file:file create_file_perms;

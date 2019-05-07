@@ -42,6 +42,7 @@ type rild_embms_socket, file_type;
 type tfsw_socket, file_type;
 type scd_sock_socket, file_type;
 type tad_socket, file_type;
+type tad_block_device, dev_type;
 type volte_stack_socket, file_type;
 type volte_imcb_socket, file_type;
 type volte_ua_socket, file_type;

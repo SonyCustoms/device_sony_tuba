@@ -26,7 +26,7 @@ type usb_adb_enable_prop, property_type;
 type adb_secure_prop, property_type;
 type persist_sys_semc_mtbf_state_prop, property_type;
 type sony_mtk_widevine_prov_prop, property_type;
-
+type updatemiscta_prop, property_type;
 # Date: W14.32
 # Operation: Migration
 # Purpose: don't allow to use default_prop

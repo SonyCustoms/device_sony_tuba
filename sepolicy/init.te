@@ -107,3 +107,8 @@ allow init debugfs:file { write };
 allow init surfaceflinger:process { noatsecure };
 allow init mtk_agpsd:process { noatsecure };
 allow init mediaserver:process { noatsecure };
+
+#ta
+allow init tad_block_device:blk_file write;
+allow init tad_socket:sock_file write;
+allow init tad:unix_stream_socket connectto;
