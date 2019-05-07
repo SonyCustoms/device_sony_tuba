@@ -21,19 +21,16 @@ allow tad proc:file r_file_perms;
 allow tad block_device:dir search;
 allow tad block_device:blk_file ioctl;
 allow tad tad_block_device:blk_file rw_file_perms;
-allow ta_ccci_service diag_device:chr_file { read open write };
+allow ta_ccci_service diag_block_device:chr_file { read open write };
 allow ta_ccci_service self:capability { dac_override fsetid };
 allow ta_ccci_service self:socket create_socket_perms;
 
 # Wakelocks
 wakelock_use(ta_ccci_service)
 
-# Connect to tad and qmuxd
+# Connect to tad
 unix_socket_connect(ta_ccci_service, tad, tad)
-qmux_socket(ta_ccci_service)
 
-# Access to smem_log
-allow ta_ccci_service smem_log_device:chr_file rw_file_perms;
 allow updatemiscta self:capability dac_override;
 set_prop(updatemiscta, updatemiscta_prop)
 

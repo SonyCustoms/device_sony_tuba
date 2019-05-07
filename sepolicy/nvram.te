@@ -18,12 +18,6 @@ type nvram_write ,domain;
 init_daemon_domain(nvram_write)
 ##
 
-##
-type tad_exec , exec_type, file_type;
-type tad ,domain;
-init_daemon_domain(tad)
-##
-
 # Date : WK14.31
 # Operation : Migration 
 # Purpose : the device is used to store Nvram backup data that can not be lost. 
