@@ -1,8 +1,5 @@
-import init.sony-trimarea.rc
-import init.sony-bootstrap.rc
-import init.connectivity.rc
 import init.sony-idd.rc
-import init.sony-idd-variant.rc
+import init.connectivity.rc
 import init.rilproxy.rc
 import init.volte.rc
 import init.mal.rc
@@ -131,6 +128,17 @@ on post-fs
     mkdir /protect_s/properties 0770 system system
 
 on post-fs-data
+    start taimport
+    start ta_ccci_service
+    # SONY: Start early TA-users
+    mkdir /data/etc 0755 root shell
+    exec u:r:taimport:s0 -- /system/bin/taimport
+
+    # SONY: Import MiscTA to System properties
+    exec u:r:taimport:s0 -- /system/bin/taimport property
+
+    # taimport ready, use this as trigger for multi-cdf-symlinker
+    setprop init.taimport.ready true
     chown system system /persist
     chmod 0771 /persist
     restorecon /persist
@@ -1443,3 +1451,24 @@ on property:debug.mtk.thermalindicator=0
 
 on property:debug.mtk.thermalindicator=1
 	start ThermalIndicator
+
+# SONY misc
+service tad_static /system/bin/tad_static /dev/block/mmcblk0p1 0,16
+    class core
+    user root
+    group root readproc
+    socket tad stream 0660 system system
+
+service updatemiscta /system/bin/updatemiscta
+    class main
+    user root
+    oneshot
+
+service taimport /system/bin/taimport platform
+    user root
+    oneshot
+    disabled
+
+service ta_ccci_service /system/bin/ta_ccci_service
+    class main
+    user root
