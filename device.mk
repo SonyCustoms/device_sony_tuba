@@ -21,8 +21,6 @@ include $(MTK_PROJECT_CONFIG)
 
 # Charger and USB + adb
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-#    ro.usb.vid=2970 \
-#	ro.mount.fs=EXT4 \
 	ro.adb.secure=0 \
 	ro.secure=0 \
 	ro.allow.mock.location=0 \
@@ -33,7 +31,13 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.semc.version.sw=1300-9504 \
     ro.semc.version.sw_revision=33.3.A.0.131 \
     ro.semc.version.sw_variant=GLOBALDS-LTE1D \
-    ro.semc.version.sw_type=eng
+    ro.semc.version.sw_type=user \
+    ro.product.model=F3111 \
+    ro.semc.product.model=F3111 \
+    ro.semc.ms_type_id=PM-0920-BV \
+    ro.semc.version.fs=GENERIC \
+    ro.semc.product.name=Xperia XA \
+    ro.semc.product.device=F31
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
