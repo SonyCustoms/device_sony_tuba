@@ -155,6 +155,13 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)/releasetools.py
 # Misc
 EXTENDED_FONT_FOOTPRINT := true
 
+# Enable Minikin text layout engine (will be the default soon)
+USE_MINIKIN := true
+#MALLOC_IMPL := dlmalloc
+
+# Charger
+BOARD_CHARGER_SHOW_PERCENTAGE := true
+
 #optimizations
 MALLOC_SVELTE := true
 
