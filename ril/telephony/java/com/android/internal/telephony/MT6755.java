@@ -43,19 +43,19 @@ import com.android.internal.telephony.MtkEccList;
  */
 public class MT6755 extends RIL implements CommandsInterface {
 
-    private static final int RIL_UNSOL_RESPONSE_PS_NETWORK_STATE_CHANGED = 3015;
-    private static final int RIL_UNSOL_RESPONSE_REGISTRATION_SUSPENDED = 3024;
-    private static final int RIL_UNSOL_INCOMING_CALL_INDICATION = 3042;
-    private static final int RIL_UNSOL_CALL_INFO_INDICATION = 3049;
-    private static final int RIL_UNSOL_SET_ATTACH_APN = 3073;
+    private static final int RIL_UNSOL_RESPONSE_PS_NETWORK_STATE_CHANGED = 3012;
+    private static final int RIL_UNSOL_RESPONSE_REGISTRATION_SUSPENDED = 3021;
+    private static final int RIL_UNSOL_INCOMING_CALL_INDICATION = 3037;
+    private static final int RIL_UNSOL_CALL_INFO_INDICATION = 3043;
+    private static final int RIL_UNSOL_SET_ATTACH_APN = 3065;
 
     private static final int RIL_REQUEST_MODEM_POWEROFF = 2010;
-    private static final int RIL_REQUEST_MODEM_POWERON = 2028;
-    private static final int RIL_REQUEST_RESUME_REGISTRATION = 2065;
-    private static final int RIL_REQUEST_SET_CALL_INDICATION = 2086;
-    private static final int RIL_REQUEST_EMERGENCY_DIAL = 2087;
-    private static final int RIL_REQUEST_SET_ECC_SERVICE_CATEGORY = 2088;
-    private static final int RIL_REQUEST_SET_ECC_LIST = 2089;
+    private static final int RIL_REQUEST_MODEM_POWERON = 2020;
+    private static final int RIL_REQUEST_RESUME_REGISTRATION = 2050;
+    private static final int RIL_REQUEST_SET_CALL_INDICATION = 2065;
+    private static final int RIL_REQUEST_EMERGENCY_DIAL = 2066;
+    private static final int RIL_REQUEST_SET_ECC_SERVICE_CATEGORY = 2067;
+    private static final int RIL_REQUEST_SET_ECC_LIST = 2068;
     private static final int REFRESH_SESSION_RESET = 6;      /* Session reset */
 
     private int[] dataCallCids = { -1, -1, -1, -1, -1 };
