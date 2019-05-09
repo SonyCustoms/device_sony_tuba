@@ -33,6 +33,7 @@ type mtkrild_exec , exec_type, file_type;
 type mtkrild ,domain;
 init_daemon_domain(mtkrild)
 net_domain(mtkrild)
+wakelock_use(mtkrild)
 ##
 
 ##
@@ -40,6 +41,7 @@ type mtkrildmd2_exec , exec_type, file_type;
 type mtkrildmd2 ,domain;
 init_daemon_domain(mtkrildmd2)
 net_domain(mtkrildmd2)
+wakelock_use(mtkrildmd2)
 ##
 
 ##
@@ -969,6 +971,7 @@ allow rilproxy init:unix_stream_socket connectto;
 allow rilproxy mal_mfi_socket:sock_file { write lock open append };
 allow rilproxy mtk_agpsd:unix_stream_socket connectto;
 allow rilproxy mtkmal:unix_stream_socket connectto;
+allow rilproxy self:capability setuid;
 allow rilproxy mtkrild:unix_stream_socket connectto;
 allow rilproxy netd_socket:sock_file { read write };
 allow rilproxy proc:file read;
@@ -978,7 +981,6 @@ allow rilproxy property_socket:sock_file write;
 allow rilproxy radio_prop:property_service set;
 allow rilproxy ril_cdma_report_prop:property_service set;
 allow rilproxy ril_mux_report_case_prop:property_service set;
-allow rilproxy rild_via_socket:sock_file write;
 allow rilproxy rilproxy:capability setuid;
 allow rilproxy rilproxy:capability2 block_suspend;
 allow rilproxy rilproxy:dir { search read lock getattr ioctl open };
