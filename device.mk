@@ -16,9 +16,6 @@
 VENDOR_BLOBS ?= vendor/sony/tuba/tuba-vendor.mk
 $(call inherit-product-if-exists, $(VENDOR_BLOBS))
 
-MTK_PROJECT_CONFIG ?= device/sony/tuba/ProjectConfig.mk
-include $(MTK_PROJECT_CONFIG)
-
 # Charger and USB + adb
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	ro.adb.secure=0 \
