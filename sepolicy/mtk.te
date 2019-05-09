@@ -69,6 +69,7 @@ type ril-3gddaemon, domain;
 type ril-3gddaemon_exec, exec_type, file_type;
 init_daemon_domain(ril-3gddaemon)
 net_domain(ril-3gddaemon)
+wakelock_use(ril-3gddaemon)
 ##
 
 ##
