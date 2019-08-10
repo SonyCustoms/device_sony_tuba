@@ -59,9 +59,6 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 # Include needed symbols
 TARGET_INCLUDE_LIBTUBA := true
-TARGET_INCLUDE_LIBGUI := true
-TARGET_LD_SHIM_LIBS := \
-    /system/vendor/lib64/hw/hwcomposer.mt6755.so|libtuba_gui.so
 
 # Display
 DEVICE_RESOLUTION := 720x1280
