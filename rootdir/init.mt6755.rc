@@ -7,7 +7,6 @@ on early-init
 
 on init
     export LD_PRELOAD "libtuba.so"
-    export LD_SHIM_LIBS "/system/vendor/lib64/hw/hwcomposer.mt6755.so|/system/lib/libtuba_gui.so
     # mount points
     mkdir /protect_f 0771 system system
     mkdir /protect_s 0771 system system
