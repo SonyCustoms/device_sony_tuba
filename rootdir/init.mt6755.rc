@@ -51,7 +51,7 @@ on init
     # SONY: Start the TrimArea Daemon. It must be started before fota-ua
     wait /dev/block/mmcblk0p1
     chown root root /dev/block/mmcblk0p1
-    chmod 0770 /dev/block/mmcblk0p1
+    chmod 0777 /dev/block/mmcblk0p1
     class_start trimarea
     exec u:r:tad:s0 system -- /system/bin/wait4tad_static
 
